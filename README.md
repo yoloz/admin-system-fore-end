@@ -1,4 +1,4 @@
-# vue3-js-test
+# vue3-elplus-js
 
 This template should help get you started developing with Vue 3 in Vite.
 
