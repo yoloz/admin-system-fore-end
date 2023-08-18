@@ -1,0 +1,6 @@
+[submodule "shell"]
+	path = shell
+	url = ssh://git@10.99.40.100:222/ued/commons-for-vue/ued-shell.git
+[submodule "packages"]
+	path = packages
+	url = ssh://git@10.99.40.100:222/ued/commons-for-vue/ued-packages.git

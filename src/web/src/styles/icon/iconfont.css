@@ -1,0 +1,131 @@
+@font-face {
+  font-family: "iconfont"; /* Project id 4151177 */
+  src: url('iconfont.woff2?t=1688697359095') format('woff2'),
+       url('iconfont.woff?t=1688697359095') format('woff'),
+       url('iconfont.ttf?t=1688697359095') format('truetype');
+}
+
+.iconfont {
+  font-family: "iconfont" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-user:before {
+  content: "\e634";
+}
+
+.icon-Files:before {
+  content: "\e61a";
+}
+
+.icon-is-active:before {
+  content: "\e601";
+}
+
+.icon-hamburger1:before {
+  content: "\e608";
+}
+
+.icon-usernav:before {
+  content: "\e999";
+}
+
+.icon-yanzhengma:before {
+  content: "\e65a";
+}
+
+.icon-password:before {
+  content: "\e663";
+}
+
+.icon-auth:before {
+  content: "\e635";
+}
+
+.icon-guizeguanli:before {
+  content: "\e61c";
+}
+
+.icon-moban:before {
+  content: "\e623";
+}
+
+.icon-mobanguanli:before {
+  content: "\e636";
+}
+
+.icon-monitor:before {
+  content: "\e71f";
+}
+
+.icon-task:before {
+  content: "\e732";
+}
+
+.icon-banben:before {
+  content: "\e60a";
+}
+
+.icon-logs:before {
+  content: "\e60f";
+}
+
+.icon-menu:before {
+  content: "\e677";
+}
+
+.icon-user-filling:before {
+  content: "\e68b";
+}
+
+.icon-icon_signout:before {
+  content: "\e632";
+}
+
+.icon-type:before {
+  content: "\e6de";
+}
+
+.icon-roleSwitch:before {
+  content: "\e77b";
+}
+
+.icon-tasks:before {
+  content: "\e9c3";
+}
+
+.icon-roles:before {
+  content: "\e606";
+}
+
+.icon-Algorithm:before {
+  content: "\e605";
+}
+
+.icon-icon-Databases:before {
+  content: "\e647";
+}
+
+.icon-approval:before {
+  content: "\e614";
+}
+
+.icon-a-icon_version1:before {
+  content: "\e604";
+}
+
+.icon-disposition:before {
+  content: "\e80a";
+}
+
+.icon-customer-center:before {
+  content: "\e827";
+}
+
+.icon-database-stroke:before {
+  content: "\e6f5";
+}
+
