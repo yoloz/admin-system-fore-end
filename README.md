@@ -6,7 +6,7 @@
 
 ```bash
 $ git clone git@github.com:yoloz/admin-system-fore-end.git
-# 连接云智的vpn拉取module模块
+# 连接公司的vpn拉取module模块(使用到的功能忽略不计,可以移除)
 $ git submodule init
 $ git submodule update
 ```
