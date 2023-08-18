@@ -1,4 +1,4 @@
-# admin system fore-end
+# admin system forend
 
 系统中已完成基础功能：用户、角色、菜单、操作日志、权限过滤
 
