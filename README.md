@@ -1,9 +1,11 @@
-# Trust Management System For Vue
+# admin system fore-end
+
+系统中已完成基础功能：用户、角色、菜单、操作日志、权限过滤、session超时、cache
 
 ## 克隆
 
 ```bash
-$ git clone https://gitee.com/youloz/trust-management-system-desktop.git
+$ git clone git@github.com:yoloz/admin-system-fore-end.git
 # 连接云智的vpn拉取module模块
 $ git submodule init
 $ git submodule update
