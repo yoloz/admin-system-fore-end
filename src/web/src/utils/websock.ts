@@ -6,7 +6,6 @@ export const ws = new WebsocketBuilder(import.meta.env.VITE_SOCKET_SERVER_URL)
     .onMessage((i, e) => {
         const { updateRouterMenu } = useMenuStore()
         const obj = JSON.parse(e.data)
-        console.log('menu:', e, obj)
         if (obj.type === 'routerMenu') {
             updateRouterMenu(obj.data)
         }

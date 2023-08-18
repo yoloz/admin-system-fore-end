@@ -141,7 +141,7 @@ const refreshTable = () => {
                         <span @click="edit(scope.row)">{{ scope.row.name }}</span>
                     </template>
                 </el-table-column>
-                <el-table-column label="菜单类型" prop="type" width="80" fixed="left">
+                <el-table-column label="菜单类型" prop="type" width="100" fixed="left">
                     <template #default="scope">
                         <el-tag type="info" v-if="scope.row.type === 0"> 目录</el-tag>
                         <el-tag type="info" v-else-if="scope.row.type === 1"> 菜单</el-tag>

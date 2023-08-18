@@ -33,9 +33,7 @@ const componentList = import.meta.glob([
 
 const loadComponent = (component: string) => {
     // return () => import(`@/${component}`)
-    const comp = componentList[`/src/${component}`]
-    console.log(component, comp)
-    return comp
+    return componentList[`/src/${component}`]
 }
 
 // 遍历路由字符串，转换为组件对象
