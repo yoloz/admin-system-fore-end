@@ -1,12 +1,15 @@
-import { Router, RouteRecordRaw } from 'vue-router'
+import { Router } from 'vue-router'
 import { storeToRefs } from 'pinia'
+import { Ref } from 'vue'
+import { ElMessage } from 'element-plus'
+import { WebsocketEvents } from 'websocket-ts'
 
-import { useUserStore } from '@/stores/userStore'
 import { ws } from '@/utils/websock'
+import { useUserStore } from '@/stores/userStore'
 import { useMenuStore } from '@/stores/menuStore'
 import { getUserInfo } from '@/users/services/userServices'
 
-// import { getRouterMenus } from '../menus/services/menuServices'
+import { getRouterMenus } from '../menus/services/menuServices'
 
 export default class RouterListener {
     // 路由
@@ -33,9 +36,20 @@ export default class RouterListener {
             }
             const routeRecordRaw: any = this.router.getRoutes().find((router: any) => router.path === '/')
             if (!routeRecordRaw) {
-                // eslint-disable-next-line no-console
-                // console.log('browser refresh lost route, reloading...')
-                loadSystemRoleRouter(this.router).then(() => next(to))
+                const { getRouterMenu } = storeToRefs(useMenuStore())
+                loadSystemRouter(getRouterMenu).then(() => {
+                    if (getRouterMenu.value.length > 0) {
+                        getRouterMenu.value.forEach((r: any) => {
+                            this.router.addRoute(r)
+                        })
+                        next(to)
+                    } else {
+                        return next('/404')
+                    }
+                }).catch((e: Error) => {
+                    ElMessage.error(e.message)
+                    return next('/404')
+                })
             } else {
                 next()
             }
@@ -43,47 +57,66 @@ export default class RouterListener {
     }
 }
 
-/**
-     * 加载系统路由信息
-     * 1. 请求路由信息
-     * 2. 解析路由权限信息
-     * 3. 解析Redirect地址
-     * @param router vue-router
-     * @returns Promise
-     */
-export const loadSystemRoleRouter = (router: Router): Promise<RouteRecordRaw[]> => {
-    const { getLoginUser } = storeToRefs(useUserStore())
-    return new Promise((resolve: (result: RouteRecordRaw[]) => void, reject) => {
-        if (getLoginUser.value.id === 0) {
-            const { setLoginUser, setPermission } = useUserStore()
-            getUserInfo().then((res: any) => {
-                setLoginUser(res.data.user)
-                setPermission(res.data.permission)
-            }).catch((e) => {
-            })
+async function loadSystemRouter(getRouterMenu: Ref<any>) {
+    const userId = await loadUserInfo()
+    if (userId === 0) {
+        return new Error('load user fail...')
+    }
+    // return await httpload(userId, getRouterMenu)
+    return await wsload(userId, getRouterMenu)
+}
+
+function loadUserInfo() {
+    return new Promise((resolve: (value: number) => void, _reject) => {
+        const { setLoginUser, setPermission } = useUserStore()
+        getUserInfo().then((res: any) => {
+            setLoginUser(res.data.user)
+            setPermission(res.data.permission)
+            resolve(res.data.user.id)
+        }).catch((_e) => {
+            resolve(0)
+        })
+    })
+}
+
+// eslint-disable-next-line no-unused-vars
+function httpload(userId: number, ref: Ref<any>) {
+    return new Promise((resolve, reject) => {
+        getRouterMenus(userId).then((res: any) => {
+            const { updateRouterMenu } = useMenuStore()
+            updateRouterMenu(res.data)
+            resolve(ref)
+        }).catch((e) => {
+            reject(e)
+        })
+    })
+}
+
+// eslint-disable-next-line no-unused-vars
+async function wsload(userId: number, ref: Ref<any>) {
+    if (ws.underlyingWebsocket?.readyState === ws.underlyingWebsocket?.OPEN) {
+        ws.send('routerMenu_' + userId)
+    } else if (ws.underlyingWebsocket?.readyState === ws.underlyingWebsocket?.CONNECTING) {
+        ws.addEventListener(WebsocketEvents.open, (i, e) => {
+            i.send('routerMenu_' + userId)
+        })
+    } else {
+        return new Error('WS connection error...')
+    }
+    return waitRouterMenu(ref)
+}
+
+async function waitRouterMenu(ref: Ref<any>) {
+    for (let i = 0; i < 5; i++) {
+        if (ref.value.length === 0) {
+            await delay(500)
         }
-        // getRouterMenus(getLoginUser.value.id).then((res: any) => {
-        //     const { updateRouterMenu } = useMenuStore()
-        //     updateRouterMenu(res.data)
-        // }).catch((e) => {
-        // })
-        ws.send('routerMenu_' + getLoginUser.value.id) // websocket + pina
-        setTimeout(() => {
-            const { getRouterMenu } = storeToRefs(useMenuStore())
-            if (getRouterMenu.value) {
-                const routerMenus = getRouterMenu.value
-                routerMenus.forEach((r: any) => {
-                    router.addRoute(r)
-                })
-                // eslint-disable-next-line no-console
-                // console.log('dynamic router load success...')
-                resolve(routerMenus as RouteRecordRaw[])
-            } else {
-                // eslint-disable-next-line no-console
-                console.warn('dynamic router load timeout...')
-                router.go(0)
-                reject(new Error('获取路由菜单超时!'))
-            }
-        }, 500)
+    }
+    return ref
+}
+
+function delay(interval: number) {
+    return new Promise(resolve => {
+        setTimeout(resolve, interval)
     })
 }

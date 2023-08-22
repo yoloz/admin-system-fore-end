@@ -5,7 +5,6 @@ import { FormInstance, FormRules } from 'element-plus'
 import { Md5 } from 'ts-md5'
 
 import router from '@/router'
-// import { loadSystemRoleRouter } from '@/router/routerListener'
 import { useUserStore } from '@/stores/userStore'
 import { useSystemStore } from '@/stores/systemStore'
 
@@ -50,7 +49,6 @@ const loginSubmit = (formEl: FormInstance | undefined) => {
                         id: res.data.userId
                     })
                     router.push('/')
-                    // loadSystemRoleRouter(router).then(() => router.push('/'))
                     loading.value = false
                 }, 200)
             }).catch(() => {

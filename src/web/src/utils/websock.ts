@@ -3,14 +3,16 @@ import { WebsocketBuilder } from 'websocket-ts'
 import { useMenuStore } from '@/stores/menuStore'
 
 export const ws = new WebsocketBuilder(import.meta.env.VITE_SOCKET_SERVER_URL)
-    .onMessage((i, e) => {
+    .onMessage((_ins, e) => {
         const { updateRouterMenu } = useMenuStore()
         const obj = JSON.parse(e.data)
         if (obj.type === 'routerMenu') {
             updateRouterMenu(obj.data)
         }
     })
-    // eslint-disable-next-line no-console
-    .onError((i, e) => { console.warn('websock has error...' + e) })
-    // .withBackoff(new ConstantBackoff(1000))
+    .onError((_ins, e) => {
+        // eslint-disable-next-line no-console
+        console.warn('websock has error...' + e)
+    })
+    // .withBackoff(new ConstantBackoff(100))
     .build()
