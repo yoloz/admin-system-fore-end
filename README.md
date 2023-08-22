@@ -40,6 +40,9 @@ $ npm install -g pnpm
 $ pnpm i
 #具体查看package.json中的定义
 $ pnpm run web:start
+# build: [vite:terser] terser not found. Since Vite v3, terser has become an optional dependency. You need to install it.
+$ pnpm install terser -D -w
+$ pnpm run web:build
 ```
 
 ## 技术栈
