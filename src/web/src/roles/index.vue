@@ -139,4 +139,4 @@ const updateTable = () => tableClassic.value.refresh()
     </custom-table-layout>
     <role-detail-drawer ref="detailRoleRef" @update-table="updateTable"></role-detail-drawer>
     <create-role-dialog ref="createRoleRef" @update-table="updateTable"></create-role-dialog>
-</template>@/stores/userStore
+</template>
