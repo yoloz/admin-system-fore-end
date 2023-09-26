@@ -66,3 +66,32 @@ $ pnpm run web:build
 17. @vueuse/core，useDark/useToggle 浅色深色主题切换（dark 样式编写）
 18. Element 样式变量 variables 和样式覆盖 override
 19. Husky+cz-git 代码 commit 是规范约束校验
+
+## commit
+
+详情请参考：[阮雪峰的 Commit message 规范](https://www.ruanyifeng.com/blog/2016/01/commit_message_change_log.html)
+每次提交，Commit message 都包括三个部分：Header，Body 和 Footer。
+
+```log
+<type>(<scope>): <subject>
+// 空一行
+<body>
+// 空一行
+<footer>
+```
+
+> Header 是必需的，Body 和 Footer 可以省略
+
+Header 部分只有一行，包括三个字段：type（必需）、scope（可选）和 subject（必需）**subject 与冒号之间有个空格**
+
+### header type
+
+用于说明 commit 的类别
+
+- feat：新功能（feature）
+- fix：修补 bug
+- docs：文档（documentation）
+- style： 格式（不影响代码运行的变动）
+- refactor：重构（即不是新增功能，也不是修改 bug 的代码变动）
+- test：增加测试
+- chore：构建过程或辅助工具的变动
