@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHashHistory } from 'vue-router'
 
 import RouterListener from './routerListener'
 
@@ -6,7 +6,7 @@ import RouterListener from './routerListener'
  * Vue Router配置类 01点55分
  */
 const router = createRouter({
-    history: createWebHistory(),
+    history: createWebHashHistory(),
     routes: [
         {
             name: 'login',
