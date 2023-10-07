@@ -14,10 +14,10 @@ const router = createRouter({
             component: () => import('@/login/index.vue')
         },
         {
-            name: '404',
-            path: '/404',
+            name: 'error',
+            path: '/error',
             // path: '/:catchAll(.*)',
-            component: () => import('@/layouts/404-view.vue')
+            component: () => import('@/layouts/error.vue')
         },
         {
             path: '/redirect',

@@ -10,7 +10,7 @@ const toHome = () => {
 </script>
 <template>
   <div class="not">
-    <el-empty description="抱歉，没有找到您要访问的地址~">
+    <el-empty description="抱歉，访问出错~">
       <el-button type="primary" @click="toHome">回到首页</el-button>
     </el-empty>
   </div>

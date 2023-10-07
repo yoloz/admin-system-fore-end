@@ -21,7 +21,7 @@ export default class RouterListener {
 
     constructor(router: Router) {
         this.router = router
-        this.whitelist = ['/login']
+        this.whitelist = ['/login', '/error']
         this.authorization = localStorage.getItem('authorization')
     }
 
@@ -44,11 +44,11 @@ export default class RouterListener {
                         })
                         next(to)
                     } else {
-                        return next('/404')
+                        return next('/error')
                     }
                 }).catch((e: Error) => {
                     ElMessage.error(e.message)
-                    return next('/404')
+                    return next('/error')
                 })
             } else {
                 next()
