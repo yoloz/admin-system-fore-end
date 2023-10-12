@@ -134,12 +134,12 @@ const closed = () => {
             </el-form>
           </template>
         </el-table-column>
-        <el-table-column label="操作信息" prop="annotation" show-overflow-tooltip width="200" />
-        <el-table-column label="用户账号" prop="username" width="150" />
-        <el-table-column label="浏览器" prop="browser" width="150" />
-        <el-table-column label="请求IP" prop="requestIp" width="150" />
-        <el-table-column label="请求位置" prop="address" width="150" />
-        <el-table-column label="请求耗时" prop="costTime" width="150" align="center">
+        <el-table-column label="操作信息" prop="annotation" show-overflow-tooltip />
+        <el-table-column label="用户账号" prop="username" />
+        <el-table-column label="浏览器" prop="browser" />
+        <el-table-column label="请求IP" prop="requestIp" />
+        <el-table-column label="请求位置" prop="address" />
+        <el-table-column label="请求耗时" prop="costTime" align="center">
           <template #default="scope">
             <el-tag v-if="scope.row.costTime <= 300">{{ scope.row.costTime }}ms</el-tag>
             <el-tag v-else-if="scope.row.costTime <= 1000" type="warning">{{ scope.row.costTime }}ms</el-tag>
@@ -171,7 +171,7 @@ const closed = () => {
     </template>
 
   </custom-table-layout>
-  <el-dialog v-model="dialog" title="异常详情" @close="closed" width="800px" :close-on-click-modal="false">
+  <el-dialog v-model="dialog" title="异常详情" @close="closed" :close-on-click-modal="false">
     <div class="errorlog">
       <pre><code>{{ exception }}</code></pre>
     </div>

@@ -7,7 +7,7 @@ import { useSystemStore } from '@/stores/systemStore'
 import ClassicAside from './classic-aside.vue'
 import ClassicHeader from './classic-header.vue'
 
-import BodyView from '../sub-view/body-view.vue'
+import TagBody from '../sub-view/tag-body.vue'
 
 const systemStore = useSystemStore()
 const { getMenCollapse } = storeToRefs(systemStore)
@@ -49,75 +49,79 @@ onBeforeUnmount(() => {
 })
 </script>
 <template>
-    <el-container class="custom-container" :class="classObj">
-        <el-aside class="custom-aside">
-            <ClassicAside />
-        </el-aside>
-        <el-container class="custom-body">
-            <el-header class="body-header">
-                <ClassicHeader />
-            </el-header>
-            <el-main class="body-main">
-                <BodyView />
-            </el-main>
-            <el-footer class="custom-footer">
-                <custom-footer></custom-footer>
-            </el-footer>
-        </el-container>
+  <el-container class="page-container" :class="classObj">
+    <el-aside class="left-aside">
+      <ClassicAside />
+    </el-aside>
+    <el-container class="page-body">
+      <el-header class="body-header">
+        <ClassicHeader />
+      </el-header>
+      <el-main class="body-main">
+        <TagBody />
+      </el-main>
+      <el-footer class="footer">
+        <custom-footer></custom-footer>
+      </el-footer>
     </el-container>
+  </el-container>
 </template>
 <style lang="scss" scoped>
-.custom-container {
-    width: 100%;
-    height: 100%;
+.page-container {
+  width: 100%;
+  height: 100%;
 }
 
 .shrinkMenu {
-    .custom-aside {
-        width: 54px !important;
-    }
+  .left-aside {
+    width: $left-aside-menu-collapse-width !important;
 
-    // .custom-body {
-    //     margin-left: 54px !important;
-    // }
+    :deep(.el-menu--collapse) {
+      width: $left-aside-menu-collapse-width !important;
+    }
+  }
 }
 
-.custom-aside {
-    transition: width 0.3s;
-    width: $custom-aside-width !important;
-    background-color: var(--custom-input-inner-bg);
-    height: 100%;
-    position: relative;
-    border-right: 0.5px solid var(--side-bar-border-right-color);
+.left-aside {
+  // transition: width 0.3s;
+  width: $left-aside-width;
+  background-color: var(--left-aside-bg-color);
+  height: 100%;
+  position: relative;
+  border-right: 1px solid var(--left-aside-border-right-color);
 }
 
-.custom-body {
-    // min-width: 1200px;
-    background: 'var(--custom-plan-color)';
-    transition: margin-left 0.3s;
-    // position: relative;
-    // margin-left: $custom-aside-width;
-
-    .body-header {
-        width: 100%;
-        height: $custom-header-height;
-        display: flex;
-        background: var(--el-menu-bg-color);
-        box-shadow: 0px 3px 6px 0px var(--custom-header-shadow);
-        user-select: none;
-        // justify-content: space-between;
-        padding: 0 12px;
-        z-index: 999;
-    }
-
-    .body-main {
-        --el-main-padding: 0 !important;
-        overflow: hidden;
-    }
+.page-body {
+  height: 100%;
+  width: calc(100vh - $left-aside-width);
 }
 
-.custom-footer {
-    height: $custom-footer-height;
-    display: none;
+.page-body .body-header {
+  width: 100%;
+  height: $top-header-height;
+  display: flex;
+  box-shadow: 0px 1px 1px 0px var(--top-header-border-shadow);
+  background: var(--top-header-bg-color);
+  user-select: none;
+  padding: 0;
+  z-index: 999;
+  color: var(--el-color-white);
+
+  :deep(.el-breadcrumb__inner) {
+    color: var(--el-color-white);
+  }
+}
+
+.page-body .body-main {
+  //   --el-main-padding: 0 !important;
+  padding-top: 0 !important;
+  height: calc(100% - $top-header-height);
+  background: var(--page-body-bg-color);
+  overflow: hidden;
+}
+
+.footer {
+  height: $footer-height;
+  display: none;
 }
 </style>

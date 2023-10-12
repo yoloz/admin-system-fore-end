@@ -37,7 +37,7 @@ defineExpose({ open })
                                         <div class="layout-mode-style-box">
                                             <div class="layout-mode-style-aside"></div>
                                             <div class="layout-mode-style-container-box">
-                                                <div class="layout-mode-style-header"></div>
+                                                <div class="layout-mode-style-header" style="background-color: var(--el-border-color-extra-light)"></div>
                                                 <div class="layout-mode-style-container"></div>
                                             </div>
                                         </div>

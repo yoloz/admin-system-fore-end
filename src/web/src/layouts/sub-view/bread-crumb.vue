@@ -30,7 +30,7 @@ onMounted(() => {
 </script>
 <template>
     <div class="custom-breadcrumb">
-        <span>当前位置:&nbsp;</span>
+        <!-- <span>当前位置:&nbsp;</span> -->
         <el-breadcrumb separator="/">
             <el-breadcrumb-item v-for="item in breadcrumbs" :key="item.path" :to="item.path">{{
                 item.name

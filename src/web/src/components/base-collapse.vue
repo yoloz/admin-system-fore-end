@@ -35,7 +35,6 @@ const close = () => { shutdown.value = !shutdown.value }
         height: 40px;
         padding: 0 10px;
         cursor: pointer;
-        background-color: var(--custom-body-color);
         display: flex;
         align-items: center;
         gap: 10px;

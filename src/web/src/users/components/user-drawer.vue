@@ -200,7 +200,7 @@ defineExpose({ open })
         h4 {
             font-size: 16px;
             font-weight: 600;
-            color: var(--custom-dialog-title-text-color);
+            color: var(--dialog-title-text-color);
             overflow: hidden;
             text-overflow: ellipsis;
         }

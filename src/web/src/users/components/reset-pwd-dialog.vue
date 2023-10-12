@@ -31,8 +31,8 @@ const submit = (formEl: FormInstance) => {
             delete passwordForm.username
             loading.value = true
             const md5: any = new Md5()
-            md5.appendAsciiStr(passwordForm.password)
-            resetPwd({ ...passwordForm, password: md5.end() }).then(res => {
+            const pwd = md5.appendAsciiStr(passwordForm.password).end()
+            resetPwd({ ...passwordForm, password: pwd }).then(res => {
                 ElMessage.success('修改成功')
                 loading.value = false
                 dialog.value = false

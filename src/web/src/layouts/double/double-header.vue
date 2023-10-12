@@ -4,11 +4,18 @@ import { useRouter } from 'vue-router'
 import { storeToRefs } from 'pinia'
 
 import { useMenuStore } from '@/stores/menuStore'
+import { useSystemStore } from '@/stores/systemStore'
 
-import SysLabel from '../top-left/system-label.vue'
 import SysSetting from '../top-right/system-setting.vue'
 
 const router = useRouter()
+const { getSystemInfo } = storeToRefs(useSystemStore())
+
+const onToRouter = (path: string | undefined): void => {
+    if (path !== undefined) {
+        router.push('/' + path)
+    }
+}
 
 // const menulist = ref<Array<IRouterMenu>>()
 const { getRouterMenu } = storeToRefs(useMenuStore())
@@ -19,152 +26,119 @@ const onLoadActiveIndex = (): void => {
     activeIndex.value = '/' + router.currentRoute.value.path.split('/')[1]
 }
 
-// 页面切换loading效果
-const loading = ref<boolean>(false)
-const onLoading = () => {
-    loading.value = true
-    setTimeout(() => {
-        loading.value = false
-    }, 300)
-}
-
-watch(() => router.currentRoute.value.path, () => {
-    onLoading()
-    onLoadActiveIndex()
-})
+watch(
+    () => router.currentRoute.value.path,
+    () => {
+    // onLoading()
+        onLoadActiveIndex()
+    }
+)
 
 onMounted(() => {
     onLoadActiveIndex()
 })
 </script>
 <template>
-    <section class="custom-bar" v-if="loading">
-        <el-progress :percentage="30" :show-text="false" :duration="0.5" :indeterminate="true" />
-    </section>
-    <div class="custom-header-left">
-        <div class="header-logo">
-            <SysLabel />
+  <div class="header-left" @click="onToRouter('')">
+    <img class="logo" :src="getSystemInfo.path" />
+    <h1 class="label">{{ getSystemInfo.name }}</h1>
+  </div>
+  <el-row :gutter="10">
+    <el-col :span="19" class="header-menu">
+      <el-menu
+        :default-active="activeIndex"
+        :router="true"
+        mode="horizontal"
+        :ellipsis="false"
+      >
+        <div v-for="(item, index) in getRouterMenu" :key="index">
+          <el-menu-item v-if="!item.meta.hidden" :index="`${item.path}`">
+            <span class="header-menu-title">{{ item.name }}</span>
+          </el-menu-item>
         </div>
-        <div class="menu-wrapper">
-            <el-menu :default-active="activeIndex" :router="true" mode="horizontal" :ellipsis="false">
-                <div v-for="(item, index) in getRouterMenu" :key="index">
-                    <el-menu-item v-if="!item.meta.hidden" :index="`${item.path}`">
-                        <span class="menu-wrapper-title">{{ item.name }}</span>
-                    </el-menu-item>
-                </div>
-            </el-menu>
-        </div>
-    </div>
-    <SysSetting />
-    <!-- header设置了position:fixed定位后，下一个div会上移,再设置一个空的div，设置成要占据的高度 -->
-    <div class="header-mk"></div>
+      </el-menu>
+    </el-col>
+    <el-col :span="5">
+      <SysSetting />
+    </el-col>
+  </el-row>
+  <!-- header设置了position:fixed定位后，下一个div会上移,再设置一个空的div，设置成要占据的高度 -->
+  <!-- <div class="header-mk"></div> -->
 </template>
 <style scoped lang="scss">
-.custom-bar {
-    position: absolute;
-    width: 100%;
-    z-index: 99;
-    top: 0;
-    left: 0;
+.header-left {
+  height: 100%;
+  min-width: $left-aside-width;
+  float: left;
+  display: flex;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+  cursor: pointer;
+  flex: none;
 
-    :deep(.el-progress-bar__outer) {
-        height: 3px !important;
-    }
+  img.logo {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+  }
+
+  h1.label {
+    margin-left: 12px;
+    font-size: 16px;
+    font-weight: 400;
+    user-select: none;
+    font-family: "PingFang-bold";
+  }
 }
 
-.custom-header-left {
+.header-menu {
+  &-title {
+    width: 70px;
+    height: 40px;
+    border-radius: 3px;
+    text-align: center;
+    line-height: 40px;
+
+    &:hover {
+      color: var(--el-color-white);
+      background-color: var(--el-color-primary);
+    }
+  }
+
+  .el-menu {
     height: 100%;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    align-content: center;
-    width: 100%;
+    border: 0;
+    overflow: hidden;
+    font-size: 14px;
+    background-color: var(--top-header-bg-color);
 
-    .header-logo {
-        height: 100%;
-        width: $custom-aside-width;
-        position: relative;
+    .el-menu-item {
+      border-bottom: 0 !important;
+      color: var(--el-color-white);
+      background-color: var(--top-header-bg-color);
+
+      &:hover {
+        background-color: var(--top-header-bg-color);
+        border-radius: 4px;
+      }
     }
 
-    .menu-wrapper {
-        width: 100%;
-        height: 100%;
-        user-select: none;
-
-        &-title {
-            width: 60px;
-            height: 32px;
-            border-radius: 3px;
-            text-align: center;
-            line-height: 32px;
-
-            &:hover {
-                color: #3366ff;
-                background-color: var(--custom-menu-hover);
-            }
-        }
-
-        :deep(.el-menu) {
-            height: 100%;
-            border: 0;
-            overflow: hidden;
-            font-size: 14px;
-
-            .el-menu-item.is-active {
-                border-bottom: 0 !important;
-            }
-
-            .el-sub-menu.is-active {
-                .menu-wrapper-title {
-                    color: var(--el-color-primary);
-
-                    &::before {
-                        content: '';
-                        width: 32px;
-                        display: inline-block;
-                        position: absolute;
-                        bottom: 6px;
-                        left: 50%;
-                        margin-left: -16px;
-                        height: 2px;
-                        background-color: var(--el-color-primary);
-                    }
-                }
-
-            }
-
-            .el-menu-item.is-active:before {
-                content: '';
-                width: 32px;
-                display: inline-block;
-                position: absolute;
-                bottom: 6px;
-                left: 50%;
-                margin-left: -16px;
-                height: 2px;
-                background-color: var(--el-color-primary);
-            }
-
-            .el-menu-item {
-                border-bottom: 0 !important;
-            }
-
-            .el-sub-menu .el-sub-menu__title {
-                border-bottom: 0 !important;
-            }
-
-            .el-sub-menu.is-active .el-sub-menu__title {
-                border-bottom: 0 !important;
-            }
-
-            .el-sub-menu .el-sub-menu__icon-arrow {
-                display: none;
-            }
-        }
+    .el-menu-item.is-active {
+      border-bottom: 0 !important;
     }
-}
 
-.header-mk {
-    height: $custom-header-height;
+    .el-menu-item.is-active:before {
+      content: "";
+      width: 32px;
+      display: inline;
+      position: absolute;
+      bottom: 6px;
+      left: 50%;
+      margin-left: -16px;
+      height: 2px;
+      background-color: var(--el-color-primary);
+    }
+  }
 }
-</style>@/menus/services/menuServices
+</style>

@@ -1,7 +1,7 @@
 {
-    "name": "@tms/web",
-    "description": "Trust Management System",
-    "version": "1.0.0-beta",
+    "name": "@asf/web",
+    "description": "Admin System Forend",
+    "version": "1.0.0",
     "private": true,
     "scripts": {
         "start": "vite --host",

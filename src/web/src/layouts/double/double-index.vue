@@ -1,73 +1,79 @@
 <script lang="ts" setup>
+import { computed } from 'vue'
+import { storeToRefs } from 'pinia'
+
+import { useSystemStore } from '@/stores/systemStore'
 
 import DoubleHeader from './double-header.vue'
 import DoubleAside from './double-aside.vue'
 
-// import BodyView from '../sub-view/body-view.vue'
-import BlankView from '../blank-view.vue'
+import BreadBody from '../sub-view/bread-body.vue'
 
+const { getMenCollapse } = storeToRefs(useSystemStore())
+
+const classObj = computed(() => {
+    return {
+        shrinkMenu: getMenCollapse.value
+    }
+})
 </script>
 <template>
   <el-container>
-    <el-header class="custom-header">
+    <el-header class="page-header">
       <DoubleHeader />
     </el-header>
-    <el-container class="custom-body">
+    <el-container class="page-body" :class="classObj">
       <el-aside class="body-aside">
         <DoubleAside />
       </el-aside>
-      <el-main class="body-main">
-        <!-- <BodyView/> -->
-        <BlankView />
+      <el-main>
+        <BreadBody />
       </el-main>
     </el-container>
-    <el-footer class="custom-footer">
+    <el-footer class="page-footer">
       <custom-footer />
     </el-footer>
   </el-container>
 </template>
 <style lang="scss" scoped>
-.custom-header {
+.page-header {
   width: 100%;
-  height: $custom-header-height;
-  display: flex;
-  background: var(--el-menu-bg-color);
-  box-shadow: 0px 3px 6px 0px var(--custom-header-shadow);
+  height: $top-header-height;
+  background: var(--top-header-bg-color);
+  box-shadow: 0px 1px 1px 0px var(--top-header-border-shadow);
   user-select: none;
-  justify-content: space-between;
-  padding: 0 12px;
-  top: 0;
+  padding: 0;
   z-index: 999;
+  color: var(--el-color-white);
 }
 
-.custom-body {
+.page-body {
   width: 100%;
-  height: calc(100vh - $custom-header-height);
+  height: calc(100vh - $top-header-height);
+  background: var(--page-body-bg-color);
+}
+
+.shrinkMenu {
+  .body-aside {
+    width: $left-aside-menu-collapse-width !important;
+
+    :deep(.el-menu--collapse) {
+      width: $left-aside-menu-collapse-width !important;
+    }
+  }
 }
 
 .body-aside {
-  position: relative;
-  background-color: var(--custom-input-inner-bg);
+  background-color: var(--left-aside-bg-color);
   overflow: hidden;
-  transition: all .2s ease-in;
-  border-right: 0.5px solid var(--side-bar-border-right-color);
-  width: $custom-aside-width;
-  float: left;
-  height: 100%;
+  // transition: all 0.2s ease-in;
+  border-right: 0.5px solid var(--left-aside-border-right-color);
+  width: $left-aside-width;
+  color: var(--el-color-white);
 }
 
-.body-main {
-  height: 100%;
-  padding: 20px 40px;
-}
-
-// .body-main {
-//   --el-main-padding: 0 !important;
-//   overflow: hidden;
-// }
-
-.custom-footer {
-  height: $custom-footer-height;
+.page-footer {
+  height: $footer-height;
   display: none;
 }
 </style>

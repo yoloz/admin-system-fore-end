@@ -42,15 +42,15 @@ const resolvePath = (mpath: string) => {
     <template v-if="!item.meta?.hidden">
         <template v-if="!item.children || item.children.length == 0">
             <el-menu-item :index="resolvePath('')">
+                <i :class="`iconfont ${item.meta?.icon}`" style="margin-left: 20px;margin-right: 10px;"></i>
                 <template #title>
-                    <i :class="`iconfont ${item.meta?.icon}`" style="margin-right: 8px;"></i>
                     <span>{{ item.name }}</span>
                 </template>
             </el-menu-item>
         </template>
         <el-sub-menu v-else :index="resolvePath('')">
             <template #title>
-                <i :class="`iconfont ${item.meta?.icon}`" style="margin-right: 8px;"></i>
+                <i :class="`iconfont ${item.meta?.icon}`" style="margin-left: 20px;margin-right: 10px;"></i>
                 <span>{{ item.name }}</span>
             </template>
             <menu-item v-for="child in item.children" :key="child.path" :is-nest="true" :item="child"

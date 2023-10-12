@@ -40,9 +40,9 @@ const loginSubmit = (formEl: FormInstance | undefined) => {
     formEl.validate(valid => {
         if (valid) {
             const md5: any = new Md5()
-            md5.appendStr(loginForm.password)
+            const pwd = md5.appendStr(loginForm.password).end()
             loading.value = true
-            login({ ...loginForm, password: md5.end() }).then((res: any) => {
+            login({ ...loginForm, password: pwd }).then((res: any) => {
                 setTimeout(() => {
                     localStorage.setItem('authorization', res.data.token)
                     setLoginUser({

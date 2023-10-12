@@ -136,46 +136,46 @@ const refreshTable = () => {
         <template #table>
             <custom-table ref="tableListRef" model="api" :api="getMenuList" :params="params" :footer="false"
                 @selection-change="setSelectionChange" row-key="id">
-                <el-table-column label="菜单标题" width="200" class-name="link" fixed="left" show-overflow-tooltip>
+                <el-table-column label="菜单标题" class-name="link" fixed="left" show-overflow-tooltip>
                     <template #default="scope">
                         <span @click="edit(scope.row)">{{ scope.row.name }}</span>
                     </template>
                 </el-table-column>
-                <el-table-column label="菜单类型" prop="type" width="100" fixed="left">
+                <el-table-column label="菜单类型" prop="type" fixed="left">
                     <template #default="scope">
                         <el-tag type="info" v-if="scope.row.type === 0"> 目录</el-tag>
                         <el-tag type="info" v-else-if="scope.row.type === 1"> 菜单</el-tag>
                         <el-tag type="info" v-else> 按钮</el-tag>
                     </template>
                 </el-table-column>
-                <el-table-column label="路由地址" width="200" show-overflow-tooltip prop="path">
+                <el-table-column label="路由地址" show-overflow-tooltip prop="path">
                     <template #default="scope">
                         <span v-if="scope.row.path"> {{ scope.row.path }}</span>
                         <span v-else></span>
                     </template>
                 </el-table-column>
-                <el-table-column label="重定向地址" width="200" show-overflow-tooltip prop="redirect">
+                <el-table-column label="重定向地址" show-overflow-tooltip prop="redirect">
                     <template #default="scope">
                         <span v-if="scope.row.redirect"> {{ scope.row.redirect }}</span>
                         <span v-else></span>
                     </template>
                 </el-table-column>
-                <el-table-column label="组件路径" width="200" show-overflow-tooltip prop="component">
+                <el-table-column label="组件路径" show-overflow-tooltip prop="component">
                     <template #default="scope">
                         <span v-if="scope.row.component"> {{ scope.row.component }}</span>
                         <span v-else></span>
                     </template>
                 </el-table-column>
-                <el-table-column label="权限标识" width="150" prop="permission" />
-                <el-table-column label="位置" width="60" prop="order" />
-                <el-table-column label="菜单图标" property="nickname" width="100">
+                <el-table-column label="权限标识" prop="permission" />
+                <el-table-column label="位置" prop="order" />
+                <el-table-column label="菜单图标" property="nickname" >
                     <template #default="scope">
                         <i v-if="scope.row.icon" :class="`iconfont ${scope.row.icon}`"
                             style="height: 30px;width: 16px;"></i>
                         <span v-else></span>
                     </template>
                 </el-table-column>
-                <el-table-column prop="hidden" label="是否隐藏" width="100">
+                <el-table-column prop="hidden" label="是否隐藏" >
                     <template #default="scope">
                         <el-tag type="info" v-if="scope.row.hidden">是</el-tag>
                         <el-tag type="info" v-else>否</el-tag>

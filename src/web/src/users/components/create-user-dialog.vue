@@ -45,8 +45,8 @@ const submit = (formEl: FormInstance) => {
             const md5: any = new Md5()
             if (mode.value === 'add') {
                 delete userForm.id
-                md5.appendStr(userForm.password)
-                createUser({ ...userForm, password: md5.end() }).then(res => {
+                const pwd = md5.appendStr(userForm.password).end()
+                createUser({ ...userForm, password: pwd }).then(res => {
                     ElMessage.success('添加成功')
                     loading.value = false
                     emit('refresh-table')

@@ -21,7 +21,6 @@
   &-label {
     font-size: 24px;
     font-weight: 500;
-    color: var(--custom-main-text-color);
   }
 }
 </style>

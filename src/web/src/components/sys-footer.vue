@@ -21,6 +21,6 @@
   align-items: center;
   justify-content: center;
   color: var(--el-text-color-regular);
-  height: $custom-footer-height;
+  height: $footer-height;
 }
 </style>
