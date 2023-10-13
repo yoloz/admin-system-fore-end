@@ -1,3 +1,6 @@
 # eslint 忽略检查 
 node_modules
 dist
+packages
+shell
+commitlint.config.js

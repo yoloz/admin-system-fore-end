@@ -1,4 +1,3 @@
-
 import vue from '@vitejs/plugin-vue'
 import { PluginOption, defineConfig, loadEnv } from 'vite'
 import eslintPlugin from 'vite-plugin-eslint'
