@@ -6,7 +6,7 @@ import { ref, reactive } from 'vue'
 import dayjs from 'dayjs'
 
 import { ILog, ILogList } from './entity/log'
-import { getRightLogList, exportLog } from './service/logSercices'
+import { getRightLogList, exportLog } from './service/logServices'
 
 const tableListRef = ref()
 // const loading = ref<boolean>(false)

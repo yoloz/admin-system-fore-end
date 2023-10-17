@@ -6,7 +6,7 @@ import { ref, reactive } from 'vue'
 import dayjs from 'dayjs'
 
 import { ILog, ILogList } from './entity/log'
-import { getErrorLogList, exportLog, getException } from './service/logSercices'
+import { getErrorLogList, exportLog, getException } from './service/logServices'
 
 const dialog = ref<boolean>(false)
 const tableListRef = ref()
