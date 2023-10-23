@@ -7,12 +7,13 @@ import { Md5 } from 'ts-md5'
 import router from '@/router'
 import { useUserStore } from '@/stores/userStore'
 import { useSystemStore } from '@/stores/systemStore'
+import { getUserInfo } from '@/users/services/userServices'
 
 import { ILogin } from './entity'
 import { getCaptchaImage, login } from './services/loginService'
 
 const { getSystemInfo } = storeToRefs(useSystemStore())
-const { setLoginUser } = useUserStore()
+const { setLoginUser, setPermission } = useUserStore()
 
 const loginRef = ref<FormInstance>()
 const loginForm = reactive<ILogin.RequestForm>({
@@ -45,9 +46,12 @@ const loginSubmit = (formEl: FormInstance | undefined) => {
             login({ ...loginForm, password: pwd }).then((res: any) => {
                 setTimeout(() => {
                     localStorage.setItem('authorization', res.data.token)
-                    setLoginUser({
-                        id: res.data.userId
-                    })
+                    getUserInfo()
+                        .then((resp: any) => {
+                            setLoginUser(resp.data.user)
+                            setPermission(resp.data.permission)
+                        })
+                        .catch((_e: any) => {})
                     router.push('/')
                     loading.value = false
                 }, 200)
