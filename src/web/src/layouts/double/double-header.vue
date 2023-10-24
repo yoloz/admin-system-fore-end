@@ -94,7 +94,7 @@ onMounted(() => {
 
 .header-menu {
   &-title {
-    width: 70px;
+    width: 100px;
     height: 40px;
     border-radius: 3px;
     text-align: center;

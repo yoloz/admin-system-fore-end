@@ -6,6 +6,7 @@ import { useRouter } from 'vue-router'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { storeToRefs } from 'pinia'
 
+import { getUserInfo } from '@/users/services/userServices'
 import { logout } from '@/login/services/loginService'
 import UpdatePwdDialog from '@/login/components/update-pwd-dialog.vue'
 import PersonalInfoDialog from '@/login/components/personal-info-dialog.vue'
@@ -18,6 +19,7 @@ import LayoutDrawer from './layout-drawer.vue'
 const router = useRouter()
 const { getLoginUser } = storeToRefs(useUserStore())
 const { setTheme } = useSystemStore()
+const { setLoginUser, setPermission } = useUserStore()
 // 版本抽屉
 const drawerRef = ref()
 const layoutDrawerRef = ref()
@@ -52,7 +54,16 @@ const handleUserCommand = (command: string) => {
     if (command === 'b') updatePwdDialogRef.value.open(getLoginUser.value)
 }
 
-onMounted(() => {})
+onMounted(() => {
+    if (!getLoginUser.value.nickname) {
+        getUserInfo()
+            .then((resp: any) => {
+                setLoginUser(resp.data.user)
+                setPermission(resp.data.permission)
+            })
+            .catch((_e: any) => {})
+    }
+})
 </script>
 <template>
   <div class="header-setting">

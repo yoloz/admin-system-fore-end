@@ -68,14 +68,19 @@ async function loadSystemRouter(getRouterMenu: Ref<any>) {
 
 function loadUserInfo() {
     return new Promise((resolve: (value: number) => void, _reject) => {
-        const { setLoginUser, setPermission } = useUserStore()
-        getUserInfo().then((res: any) => {
-            setLoginUser(res.data.user)
-            setPermission(res.data.permission)
-            resolve(res.data.user.id)
-        }).catch((_e) => {
-            resolve(0)
-        })
+        const { getLoginUser } = storeToRefs(useUserStore())
+        if (getLoginUser.value.id && getLoginUser.value.id > 0) {
+            resolve(getLoginUser.value.id)
+        } else {
+            const { setLoginUser, setPermission } = useUserStore()
+            getUserInfo().then((res: any) => {
+                setLoginUser(res.data.user)
+                setPermission(res.data.permission)
+                resolve(res.data.user.id)
+            }).catch((_e) => {
+                resolve(0)
+            })
+        }
     })
 }
 
