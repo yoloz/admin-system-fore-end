@@ -124,11 +124,15 @@ const closed = () => {
         <el-table-column type="expand">
           <template #default="props">
             <el-form label-position="left">
-              <el-form-item label="请求方法">
-                <span style="color: #C0C0C0;margin-left: 10px;size: 12px;">{{ props.row.method }}</span>
+              <el-form-item label="请求方法:" style="margin-left: 15px;">
+                <span style="color: #c0c0c0; font-size: 14px">{{
+                  props.row.method
+                }}</span>
               </el-form-item>
-              <el-form-item label="请求参数">
-                <span style="color: #C0C0C0;margin-left: 10px;size: 12px;">{{ props.row.params }}</span>
+              <el-form-item label="请求参数:" style="margin-left: 15px;">
+                <span style="color: #c0c0c0; font-size: 14px">{{
+                  props.row.params
+                }}</span>
               </el-form-item>
             </el-form>
           </template>
