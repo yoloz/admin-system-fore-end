@@ -202,10 +202,11 @@ const refreshTable = () => {
         </el-table-column>
         <el-table-column label="登录时间" min-width="150" show-overflow-tooltip>
           <template #default="scope">
-            <span v-if="scope.row.loginTime">{{
-              dayjs(scope.row.loginTime).format("YYYY-MM-DD HH:mm:ss")
+            <span>{{
+              scope.row.loginTime
+                ? dayjs(scope.row.loginTime).format("YYYY-MM-DD HH:mm:ss")
+                : ""
             }}</span>
-            <span v-else></span>
           </template>
         </el-table-column>
         <el-table-column
