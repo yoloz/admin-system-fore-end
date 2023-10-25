@@ -100,7 +100,9 @@ const refreshTable = () => {
             >添加用户</el-button
           >
           <el-dropdown>
-            <el-button text bg><el-icon><MoreFilled /> </el-icon></el-button>
+            <el-button text bg
+              ><el-icon><MoreFilled /> </el-icon
+            ></el-button>
             <template #dropdown>
               <el-dropdown-menu>
                 <el-dropdown-item @click="exportTable" :icon="Download">
@@ -152,7 +154,7 @@ const refreshTable = () => {
         />
         <el-table-column
           label="用户账号"
-          width="240"
+          min-width="100"
           class-name="link"
           fixed="left"
           show-overflow-tooltip
@@ -166,11 +168,11 @@ const refreshTable = () => {
         <el-table-column
           label="用户昵称"
           property="nickname"
-          width="260"
           fixed="left"
+          min-width="120"
           show-overflow-tooltip
         />
-        <el-table-column label="用户角色" width="370" show-overflow-tooltip>
+        <el-table-column label="用户角色" min-width="120" show-overflow-tooltip>
           <template #default="scope">
             <custom-tag-group>
               <el-tag v-for="role in scope.row.roles" :key="role.id">{{
@@ -181,18 +183,24 @@ const refreshTable = () => {
         </el-table-column>
         <el-table-column
           label="手机号码"
-          width="160"
           class-name="number"
           prop="phone"
+          min-width="120"
+          show-overflow-tooltip
         />
-        <el-table-column label="电子邮箱" width="220" prop="email" />
-        <el-table-column label="用户类型" width="120">
+        <el-table-column
+          label="电子邮箱"
+          prop="email"
+          min-width="120"
+          show-overflow-tooltip
+        />
+        <el-table-column label="用户类型" min-width="100" show-overflow-tooltip>
           <template #default="scope">
             <el-tag v-if="scope.row.builtin" type="info">内置</el-tag>
             <el-tag v-else>自定义</el-tag>
           </template>
         </el-table-column>
-        <el-table-column label="登录时间" width="220">
+        <el-table-column label="登录时间" min-width="150" show-overflow-tooltip>
           <template #default="scope">
             <span v-if="scope.row.loginTime">{{
               dayjs(scope.row.loginTime).format("YYYY-MM-DD HH:mm:ss")
@@ -200,8 +208,13 @@ const refreshTable = () => {
             <span v-else></span>
           </template>
         </el-table-column>
-        <el-table-column label="登录IP" property="loginIp" width="220" />
-        <el-table-column label="用户状态" width="130">
+        <el-table-column
+          label="登录IP"
+          property="loginIp"
+          min-width="120"
+          show-overflow-tooltip
+        />
+        <el-table-column label="用户状态" min-width="100" show-overflow-tooltip>
           <template #default="scope">
             <span class="status success" v-if="scope.row.enable">启用</span>
             <span class="status pending" v-else>停用</span>
@@ -226,75 +239,6 @@ const refreshTable = () => {
   <user-drawer ref="userDrawerRef" @update-table="refreshTable"></user-drawer>
 </template>
 <style lang="scss" scoped>
-.sys-table-header {
-  width: 100%;
-  display: flex;
-  align-items: center;
-
-  &-left {
-    display: flex;
-    align-items: center;
-
-    .title {
-      margin-right: 14px;
-      font-weight: 500;
-      font-size: 16px;
-      color: #000;
-    }
-
-    p {
-      color: #6b778c;
-      font-size: 16px;
-
-      span {
-        color: #172b4d;
-        padding: 5px;
-      }
-    }
-  }
-
-  &-right {
-    margin-left: auto;
-    display: flex;
-    align-items: center;
-    column-gap: 12px;
-
-    .el-select {
-      width: 120px;
-
-      .el-input {
-        height: 32px;
-
-        .el-input__wrapper {
-          background: #dfe1e6;
-        }
-      }
-    }
-  }
-
-  .header-msg {
-    line-height: 32px;
-    flex-shrink: 0;
-    padding-right: 20px;
-    font-weight: 600;
-
-    span {
-      color: #0052cc;
-    }
-  }
-
-  .header-btn-group {
-    .el-button {
-      display: inline-flex;
-      align-items: center;
-      font-size: 14px;
-
-      color: #344563;
-      margin-right: 10px;
-    }
-  }
-}
-
 .status {
   padding-left: 16px;
 

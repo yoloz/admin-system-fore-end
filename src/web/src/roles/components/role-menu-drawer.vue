@@ -64,7 +64,7 @@ defineExpose({ open })
     </el-drawer>
 </template>
 <style lang="scss" scoped>
-:deep(.el-tree-node__content) {
-    height: 36px;
-}
+// :deep(.el-tree-node__content) {
+//     height: 36px;
+// }
 </style>

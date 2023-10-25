@@ -98,40 +98,48 @@ defineExpose({ open })
     :close-on-click-modal="false"
   >
     <custom-form-layout>
+      <template #title>基本信息</template>
       <template #form>
         <el-form
           ref="roleFormRef"
           :model="roleForm"
           :rules="roleRules"
-          label-position="left"
+          label-position="top"
         >
-          <el-form-item label="名称" prop="name">
-            <el-input
-              v-model="roleForm.name"
-              placeholder="请输入角色名称"
-            ></el-input>
-          </el-form-item>
-          <el-form-item label="角色级别" prop="level">
-            <el-input-number
-              v-model="roleForm.level"
-              :min="roleLevel"
-              controls-position="right"
-              style="width: 200px"
-            />
-            <span style="color: #c0c0c0; margin-left: 10px; size: 12px"
-              >数值越小级别越大</span
-            >
-          </el-form-item>
-          <el-form-item label="描述" prop="desc">
-            <el-input
-              v-model="roleForm.desc"
-              placeholder="请输入描述信息"
-              show-word-limit
-              type="textarea"
-              :autosize="{ minRows: 2, maxRows: 2 }"
-              maxlength="64"
-            ></el-input>
-          </el-form-item>
+          <el-row style="width: 100%">
+            <el-col :span="24">
+              <el-form-item label="名称" prop="name">
+                <el-input
+                  v-model="roleForm.name"
+                  placeholder="请输入角色名称"
+                ></el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :span="24">
+              <el-form-item label="级别" prop="level">
+                <el-input-number
+                  v-model="roleForm.level"
+                  :min="roleLevel"
+                  controls-position="right"
+                />
+                <span style="color: #c0c0c0; font-size: 13px"
+                  >数值越小级别越大</span
+                >
+              </el-form-item>
+            </el-col>
+            <el-col :span="24">
+              <el-form-item label="描述" prop="desc">
+                <el-input
+                  v-model="roleForm.desc"
+                  placeholder="请输入描述信息"
+                  show-word-limit
+                  type="textarea"
+                  :autosize="{ minRows: 2, maxRows: 2 }"
+                  maxlength="64"
+                ></el-input>
+              </el-form-item>
+            </el-col>
+          </el-row>
         </el-form>
       </template>
     </custom-form-layout>

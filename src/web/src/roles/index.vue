@@ -22,6 +22,10 @@ const params = reactive<IRoleList.RequestForm>({
     pageSize: 15,
     totalRow: -1
 })
+// 搜索
+const handleRoleSearch = () => {
+    tableClassic.value.refresh()
+}
 // 列表选择
 const checked = ref<Array<number>>([])
 const onSelectChange = (selection: IRoleForm[]) => {
@@ -71,7 +75,7 @@ const commonsRemove = (ids: Array<number>) => {
     })
 }
 // 列表刷新
-const refreshTable = () => tableClassic.value.refresh()
+const updateTable = () => tableClassic.value.refresh()
 </script>
 <template>
     <custom-table-layout>
@@ -88,7 +92,7 @@ const refreshTable = () => tableClassic.value.refresh()
         <template #toolbar>
             <custom-table-toolbar>
                 <template #left>
-                    <el-input placeholder="请输入角色名称" clearable @change="refreshTable" v-model="params.name"
+                    <el-input placeholder="请输入角色名称" clearable @change="handleRoleSearch" v-model="params.name"
                         :prefix-icon="Search"></el-input>
                 </template>
             </custom-table-toolbar>
@@ -97,20 +101,20 @@ const refreshTable = () => tableClassic.value.refresh()
             <custom-table ref="tableClassic" model="api" :api="queryRoleList" :params="params"
                 @selection-change="onSelectChange" :selection="false">
                 <el-table-column type="selection" fixed='left' width="50" align="center" :selectable="checkbox" />
-                <el-table-column class-name="link" label="角色名称" show-overflow-tooltip fixed="left" width="200">
+                <el-table-column class-name="link" label="角色名称" show-overflow-tooltip fixed="left" min-width="150">
                     <template #default="scope">
                         <span @click="views(scope.row)">{{ scope.row.name }}</span>
                     </template>
                 </el-table-column>
-                <el-table-column label="类型" show-overflow-tooltip width="100">
+                <el-table-column label="类型" show-overflow-tooltip min-width="100">
                     <template #default="scope">
                         <el-tag v-if="scope.row.builtin" type="info">内置</el-tag>
                         <el-tag v-else>自定义</el-tag>
                     </template>
                 </el-table-column>
                 <el-table-column prop="desc" label="描述" show-overflow-tooltip min-width="200"></el-table-column>
-                <el-table-column prop="createUser" label="创建者" show-overflow-tooltip width="100"></el-table-column>
-                <el-table-column label="创建时间" prop="createTime" width="200">
+                <el-table-column prop="createUser" label="创建者" min-width="100"></el-table-column>
+                <el-table-column label="创建时间" prop="createTime" min-width="150" show-overflow-tooltip>
                     <template #default="scope">
                         <span v-if="scope.row.createTime">{{
                             dayjs(scope.row.createTime).format("YYYY-MM-DD HH:mm:ss")
@@ -118,8 +122,8 @@ const refreshTable = () => tableClassic.value.refresh()
                        <span v-else></span>
                     </template>
                 </el-table-column>
-                <el-table-column prop="updateUser" label="修改者" show-overflow-tooltip width="100"></el-table-column>
-                <el-table-column label="修改时间" prop="updateTime" width="200">
+                <el-table-column prop="updateUser" label="修改者" show-overflow-tooltip min-width="100"></el-table-column>
+                <el-table-column label="修改时间" prop="updateTime" min-width="150" show-overflow-tooltip>
                     <template #default="scope">
                         <span v-if="scope.row.updateTime">{{
                             dayjs(scope.row.updateTime).format("YYYY-MM-DD HH:mm:ss")
@@ -133,6 +137,6 @@ const refreshTable = () => tableClassic.value.refresh()
             </custom-table>
         </template>
     </custom-table-layout>
-    <role-detail-drawer ref="detailRoleRef" @update-table="refreshTable"></role-detail-drawer>
-    <create-role-dialog ref="createRoleRef" @update-table="refreshTable"></create-role-dialog>
+    <role-detail-drawer ref="detailRoleRef" @update-table="updateTable"></role-detail-drawer>
+    <create-role-dialog ref="createRoleRef" @update-table="updateTable"></create-role-dialog>
 </template>

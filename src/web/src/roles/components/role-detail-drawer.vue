@@ -120,9 +120,7 @@ defineExpose({ open })
             <el-button style="margin-right: 15px;" :icon="Edit" type="primary" @click="edit">编辑</el-button>
             <!-- <el-dropdown @command="handleCommand" v-if="!rawRow?.builtin"> -->
                 <el-dropdown @command="handleCommand">
-                <el-button text bg><el-icon>
-                        <MoreFilled />
-                    </el-icon></el-button>
+                <el-button text bg><el-icon><MoreFilled /></el-icon></el-button>
                 <template #dropdown>
                     <el-dropdown-menu>
                         <el-dropdown-item command="auth">授权</el-dropdown-item>
@@ -156,9 +154,21 @@ defineExpose({ open })
                     </el-tooltip>
                 </li>
                 <li class="list-item">
+                    <p class="label">创建者</p>
+                    <el-tooltip placement="bottom-start" :content="rawRow?.createUser">
+                        <p class="value">{{ rawRow?.createUser || '' }}</p>
+                    </el-tooltip>
+                </li>
+                <li class="list-item">
                     <p class="label">创建时间</p>
                     <p class="value">{{ rawRow?.createTime ? dayjs(rawRow?.createTime).format("YYYY-MM-DD HH:mm:ss") : '' }}
                     </p>
+                </li>
+                <li class="list-item">
+                    <p class="label">修改者</p>
+                    <el-tooltip placement="bottom-start" :content="rawRow?.updateUser">
+                        <p class="value">{{ rawRow?.updateUser || '' }}</p>
+                    </el-tooltip>
                 </li>
                 <li class="list-item">
                     <p class="label">修改时间</p>
@@ -171,17 +181,17 @@ defineExpose({ open })
                 <template #table>
                     <custom-table v-if="detailsModel" ref="tableClassic" model="api" :api="getUserByRole" :params="params"
                         @selection-change="onSelectChange">
-                        <el-table-column label="用户账号" width="160" prop="username" fixed="left"/>
-                        <el-table-column label="用户昵称" prop="nickname" width="160" fixed="left" show-overflow-tooltip />
-                        <el-table-column label="状态" width="100">
+                        <el-table-column label="用户账号" min-width="120" prop="username" fixed="left"/>
+                        <el-table-column label="用户昵称" prop="nickname" min-width="150" fixed="left" show-overflow-tooltip />
+                        <el-table-column label="状态" min-width="100">
                             <template #default="scope">
                                 <span class="status success" v-if="scope.row.enable">启用</span>
                                 <span class="status pending" v-else>停用</span>
                             </template>
                         </el-table-column>
-                        <el-table-column label="手机号码" width="160" prop="phone" />
-                        <el-table-column label="电子邮箱" width="200" prop="email" show-overflow-tooltip />
-                        <el-table-column label="登录时间" width="200">
+                        <el-table-column label="手机号码" min-width="150" prop="phone" />
+                        <el-table-column label="电子邮箱" min-width="150" prop="email" show-overflow-tooltip />
+                        <el-table-column label="登录时间" min-width="150" show-overflow-tooltip>
                             <template #default="scope">
                                 <span v-if="scope.row.loginTime">{{
                                     dayjs(scope.row.loginTime).format("YYYY-MM-DD HH:mm:ss")
@@ -189,8 +199,8 @@ defineExpose({ open })
                                 <span v-else></span>
                             </template>
                         </el-table-column>
-                        <el-table-column label="登录IP" property="loginIp" width="160" />
-                        <el-table-column label="创建时间" prop="createTime" width="200">
+                        <el-table-column label="登录IP" property="loginIp" min-width="150" />
+                        <el-table-column label="创建时间" prop="createTime" min-width="150" show-overflow-tooltip>
                             <template #default="scope">
                                 <span v-if="scope.row.createTime">{{
                                     dayjs(scope.row.createTime).format("YYYY-MM-DD HH:mm:ss")
@@ -198,7 +208,7 @@ defineExpose({ open })
                                 <span v-else></span>
                             </template>
                         </el-table-column>
-                        <el-table-column label="操作" fixed="right" align="center" width="60">
+                        <el-table-column label="操作" fixed="right" align="center" min-width="60">
                             <template #default="scope">
                                 <el-tooltip content="将用户从该角色中移除">
                                     <el-button link type="danger" @click="singleRemove(scope.row.id)">移除</el-button>
