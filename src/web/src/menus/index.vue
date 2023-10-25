@@ -20,7 +20,6 @@ import { IMenuForm, IMenuList } from './entity/menu'
 const createMenuRef = ref()
 
 const tableListRef = ref()
-const searchMenu = ref()
 const uploadRef = ref()
 
 const loading = ref<boolean>(false)
@@ -56,12 +55,6 @@ const onBatchDeletion = () => {
 const setSelectionChange = (selection: IMenuForm[]) => {
     checked.value = []
     checked.value = selection.map((el: IMenuForm) => el.id!)
-}
-
-// 搜索框
-const queryByName = () => {
-    params.name = searchMenu.value
-    refreshTable()
 }
 
 const edit = (row: any) => {
@@ -128,8 +121,8 @@ const refreshTable = () => {
         <template #toolbar>
             <custom-table-toolbar>
                 <template #left>
-                    <el-input @change="queryByName" :prefix-icon="Search" clearable placeholder="请输入菜单名称"
-                        v-model="searchMenu" />
+                    <el-input @change="refreshTable" :prefix-icon="Search" clearable placeholder="请输入菜单名称"
+                        v-model="params.name" />
                 </template>
             </custom-table-toolbar>
         </template>

@@ -22,10 +22,6 @@ const params = reactive<IRoleList.RequestForm>({
     pageSize: 15,
     totalRow: -1
 })
-// 搜索
-const handleRoleSearch = () => {
-    tableClassic.value.refresh()
-}
 // 列表选择
 const checked = ref<Array<number>>([])
 const onSelectChange = (selection: IRoleForm[]) => {
@@ -75,7 +71,7 @@ const commonsRemove = (ids: Array<number>) => {
     })
 }
 // 列表刷新
-const updateTable = () => tableClassic.value.refresh()
+const refreshTable = () => tableClassic.value.refresh()
 </script>
 <template>
     <custom-table-layout>
@@ -92,7 +88,7 @@ const updateTable = () => tableClassic.value.refresh()
         <template #toolbar>
             <custom-table-toolbar>
                 <template #left>
-                    <el-input placeholder="请输入角色名称" clearable @change="handleRoleSearch" v-model="params.name"
+                    <el-input placeholder="请输入角色名称" clearable @change="refreshTable" v-model="params.name"
                         :prefix-icon="Search"></el-input>
                 </template>
             </custom-table-toolbar>
@@ -137,6 +133,6 @@ const updateTable = () => tableClassic.value.refresh()
             </custom-table>
         </template>
     </custom-table-layout>
-    <role-detail-drawer ref="detailRoleRef" @update-table="updateTable"></role-detail-drawer>
-    <create-role-dialog ref="createRoleRef" @update-table="updateTable"></create-role-dialog>
+    <role-detail-drawer ref="detailRoleRef" @update-table="refreshTable"></role-detail-drawer>
+    <create-role-dialog ref="createRoleRef" @update-table="refreshTable"></create-role-dialog>
 </template>

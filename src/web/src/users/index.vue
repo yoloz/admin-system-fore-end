@@ -1,26 +1,16 @@
 <script lang="ts" setup>
 import { ref, reactive } from 'vue'
-import {
-    Search,
-    MoreFilled,
-    Upload,
-    Download
-} from '@element-plus/icons-vue'
+import { Search, MoreFilled, Download } from '@element-plus/icons-vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
-import { downloadBlobFile } from '@ued/utils/src/utils'
 import dayjs from 'dayjs'
 import { storeToRefs } from 'pinia'
+import { utils, writeFileXLSX } from 'xlsx'
 
 import { useUserStore } from '@/stores/userStore'
 
 import UserDrawer from './components/user-drawer.vue'
 import CreateUserDialog from './components/create-user-dialog.vue'
-import {
-    queryUserList,
-    removeUser,
-    exportData,
-    importData
-} from './services/userServices'
+import { queryUserList, removeUser } from './services/userServices'
 import { IUserForm, IUserList } from './entity/user'
 
 const { getLoginUser } = storeToRefs(useUserStore())
@@ -28,13 +18,10 @@ const { getLoginUser } = storeToRefs(useUserStore())
 const createUserDialogRef = ref()
 
 const tableListRef = ref()
-const searchUser = ref()
-const uploadRef = ref()
 
 const loading = ref<boolean>(false)
-const file = ref()
 const userDrawerRef = ref()
-// const btnLoading = ref<boolean>(false)
+
 // 列表选择
 const checked = ref<Array<number>>([])
 const params = reactive<IUserList.RequestForm>({
@@ -67,58 +54,35 @@ const setSelectionChange = (selection: IUserForm[]) => {
     checked.value = selection.map((el: IUserForm) => el.id!)
 }
 
-// 搜索框
-const queryByName = () => {
-    params.username = searchUser.value
-    refreshTable()
-}
-
 // 根据用户编号获取详细信息
 const getUserDetail = (row: any) => {
     const levels = row.roles!.map((item: any) => item.level)
-    levels.sort(function (a: number, b: number) { return a - b })
+    levels.sort(function (a: number, b: number) {
+        return a - b
+    })
     if (levels[0] >= getLoginUser.value.level) {
         userDrawerRef.value.open(row)
     } else {
         ElMessage.warning('权限等级不足!')
     }
 }
+const exportTable = () => {
+    queryUserList(params).then((res: any) => {
+        const ws = utils.json_to_sheet(res.data.records)
+        const wb = utils.book_new()
+        utils.book_append_sheet(wb, ws, 'Sheet1')
+        writeFileXLSX(wb, Date.now() + '.xlsx')
+    })
+}
 
 const checkbox = (row: any) => {
     const levels = row.roles!.map((item: any) => item.level)
-    levels.sort(function (a: number, b: number) { return a - b })
+    levels.sort(function (a: number, b: number) {
+        return a - b
+    })
     return levels[0] >= getLoginUser.value.level && !row.builtin
 }
 
-const httpRequest = (rawFile: any) => {
-    const formData = new FormData()
-
-    formData.append('file', rawFile.file)
-    importData(formData).then((res: any) => {
-        ElMessage.success('导入成功')
-        refreshTable()
-    })
-}
-const updateTable = () => {
-    refreshTable()
-}
-// 导入模板
-const handleDropDown = (value: string) => {
-    if (value === 'export') {
-        const exportParams = {
-            username: params.username,
-            enable: params.enable
-        }
-        exportData(exportParams).then((res: any) => {
-            downloadBlobFile(
-                res,
-                '用户列表',
-                'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-            )
-            ElMessage.success('导出成功')
-        })
-    }
-}
 const refreshTable = () => {
     tableListRef.value.refresh()
 }
@@ -132,19 +96,15 @@ const refreshTable = () => {
           <span>用户管理</span>
         </template>
         <template #right>
-          <el-button type="primary" @click="addUser" style="margin-right: 10px">添加用户</el-button>
-          <el-dropdown @command="handleDropDown">
-            <el-button text bg><el-icon>
-                <MoreFilled />
-              </el-icon></el-button>
+          <el-button type="primary" @click="addUser" style="margin-right: 10px"
+            >添加用户</el-button
+          >
+          <el-dropdown>
+            <el-button text bg><el-icon><MoreFilled /> </el-icon></el-button>
             <template #dropdown>
               <el-dropdown-menu>
-                <el-upload ref="uploadRef" class="upload-demo" accept=".xlsx" :file-list="file" :show-file-list="false"
-                  :http-request="httpRequest" action="none">
-                  <el-dropdown-item disabled command="import" :icon="Upload">批量导入</el-dropdown-item>
-                </el-upload>
-                <el-dropdown-item command="export" :icon="Download">
-                  <span>批量导出</span>
+                <el-dropdown-item @click="exportTable" :icon="Download">
+                  <span>导出当前页</span>
                 </el-dropdown-item>
               </el-dropdown-menu>
             </template>
@@ -155,8 +115,19 @@ const refreshTable = () => {
     <template #toolbar>
       <custom-table-toolbar>
         <template #left>
-          <el-input @change="queryByName" :prefix-icon="Search" clearable placeholder="请输入用户账号" v-model="searchUser" />
-          <el-select v-model="params.enable" placeholder="启/停" clearable @change="updateTable">
+          <el-input
+            @change="refreshTable"
+            :prefix-icon="Search"
+            clearable
+            placeholder="请输入用户账号"
+            v-model="params.username"
+          />
+          <el-select
+            v-model="params.enable"
+            placeholder="启/停"
+            clearable
+            @change="refreshTable"
+          >
             <el-option label="启用" :value="true"></el-option>
             <el-option label="停用" :value="false"></el-option>
           </el-select>
@@ -164,23 +135,56 @@ const refreshTable = () => {
       </custom-table-toolbar>
     </template>
     <template #table>
-      <custom-table ref="tableListRef" model="api" :api="queryUserList" :params="params"
-        @selection-change="setSelectionChange" :selection="false">
-        <el-table-column type="selection" fixed='left' width="50" align="center" :selectable="checkbox" />
-        <el-table-column label="用户账号" width="240" class-name="link" fixed="left" show-overflow-tooltip>
+      <custom-table
+        ref="tableListRef"
+        model="api"
+        :api="queryUserList"
+        :params="params"
+        @selection-change="setSelectionChange"
+        :selection="false"
+      >
+        <el-table-column
+          type="selection"
+          fixed="left"
+          width="50"
+          align="center"
+          :selectable="checkbox"
+        />
+        <el-table-column
+          label="用户账号"
+          width="240"
+          class-name="link"
+          fixed="left"
+          show-overflow-tooltip
+        >
           <template #default="scope">
-            <span @click="getUserDetail(scope.row)">{{ scope.row.username }}</span>
+            <span @click="getUserDetail(scope.row)">{{
+              scope.row.username
+            }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="用户昵称" property="nickname" width="260" fixed="left" show-overflow-tooltip />
+        <el-table-column
+          label="用户昵称"
+          property="nickname"
+          width="260"
+          fixed="left"
+          show-overflow-tooltip
+        />
         <el-table-column label="用户角色" width="370" show-overflow-tooltip>
           <template #default="scope">
             <custom-tag-group>
-              <el-tag v-for="role in scope.row.roles" :key="role.id">{{ role.name }}</el-tag>
+              <el-tag v-for="role in scope.row.roles" :key="role.id">{{
+                role.name
+              }}</el-tag>
             </custom-tag-group>
           </template>
         </el-table-column>
-        <el-table-column label="手机号码" width="160" class-name="number" prop="phone" />
+        <el-table-column
+          label="手机号码"
+          width="160"
+          class-name="number"
+          prop="phone"
+        />
         <el-table-column label="电子邮箱" width="220" prop="email" />
         <el-table-column label="用户类型" width="120">
           <template #default="scope">
@@ -204,13 +208,21 @@ const refreshTable = () => {
           </template>
         </el-table-column>
         <template #tools>
-          <el-button :disabled="checked.length <= 0" @click="onBatchDeletion" :loading="loading">批量删除</el-button>
+          <el-button
+            :disabled="checked.length <= 0"
+            @click="onBatchDeletion"
+            :loading="loading"
+            >批量删除</el-button
+          >
         </template>
       </custom-table>
     </template>
   </custom-table-layout>
 
-  <create-user-dialog ref="createUserDialogRef" @refresh-table="refreshTable"></create-user-dialog>
+  <create-user-dialog
+    ref="createUserDialogRef"
+    @refresh-table="refreshTable"
+  ></create-user-dialog>
   <user-drawer ref="userDrawerRef" @update-table="refreshTable"></user-drawer>
 </template>
 <style lang="scss" scoped>
