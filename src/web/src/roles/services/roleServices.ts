@@ -23,17 +23,17 @@ export const getRoleOptionByUser = (userId: number) => {
 }
 // 获取当前角色授权菜单
 export const getMenuByRole = (params: IRoleMenuRelation) => {
-    return httpRequest.post('/role/menuList', params)
+    return httpRequest.post('/roleMenuRel/getMenuByRole', params)
 }
 // 编辑角色权限
 export const updateRoleMenu = (params: IRoleMenuRelation) => {
-    return httpRequest.post('/role/menuEdit', params)
+    return httpRequest.post('/roleMenuRel/updateRoleMenu', params)
 }
 // 获取角色相关用户
 export const getUserByRole = (params: IRoleUserRelation) => {
-    return httpRequest.post<IRoleUserRelationList.ResponseData>('/role/userList', params)
+    return httpRequest.post<IRoleUserRelationList.ResponseData>('/roleUserRel/getUserByRole', params)
 }
 // 移除角色相关用户
 export const delRoleUserRelation = (params: IRoleUserRelation) => {
-    return httpRequest.post('/role/userRemove', params)
+    return httpRequest.post('/roleUserRel/userRemove', params)
 }

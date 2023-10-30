@@ -74,7 +74,7 @@ export const getUserInfo = () => {
  * @returns
  */
 export const authRole = (params: IUserForm) => {
-    return httpRequest.post('/user/authRole', params)
+    return httpRequest.post('/roleUserRel/updateByUser', params)
 }
 /**
  * 导入数据
