@@ -126,18 +126,18 @@ defineExpose({ open })
                     <el-row style="width:100%">
                         <el-col :span="12">
                             <el-form-item label="用户账号" prop="username">
-                                <el-input v-model="userForm.username" maxlength="20" show-word-limit placeholder="请输入"
+                                <el-input v-model="userForm.username" maxlength="50" show-word-limit placeholder="请输入"
                                     :disabled="disabled" />
                             </el-form-item>
                         </el-col>
                         <el-col :span="12">
                             <el-form-item label="用户昵称" prop="nickname">
-                                <el-input v-model="userForm.nickname" maxlength="20" show-word-limit placeholder="请输入" />
+                                <el-input v-model="userForm.nickname" maxlength="50" show-word-limit placeholder="请输入" />
                             </el-form-item>
                         </el-col>
                         <el-col :span="12" v-if="mode !== 'edit'">
                             <el-form-item label="登录密码" prop="password">
-                                <el-input show-password autocomplete="new-password" maxlength="16" show-word-limit
+                                <el-input show-password autocomplete="new-password" maxlength="100" show-word-limit
                                     v-model.trim="userForm.password" placeholder="请输入" type="password"
                                     :disabled="mode === 'edit'" />
                             </el-form-item>

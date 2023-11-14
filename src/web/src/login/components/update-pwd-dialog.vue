@@ -36,8 +36,8 @@ const param = reactive<IPwd>({
 
 const infoRules = reactive<FormRules>({
     oldPassword: [
-        { required: true, pattern: '[^ \x22]+', message: '旧密码不能为空', trigger: ['blur'] }
-        // { validator: validatePassword, trigger: ['blur'] }
+        { required: true, pattern: '[^ \x22]+', message: '旧密码不能为空', trigger: ['blur'] },
+        { validator: validatePassword, trigger: ['blur'] }
     ],
     newPassword: [
         { required: true, pattern: '[^ \x22]+', message: '新密码不能为空', trigger: ['blur'] },
@@ -121,4 +121,4 @@ defineExpose({ open })
         </template>
     </el-dialog>
 </template>
-<style scoped lang="scss"></style>../users/entity/user
+<style scoped lang="scss"></style>

@@ -111,6 +111,8 @@ defineExpose({ open })
               <el-form-item label="名称" prop="name">
                 <el-input
                   v-model="roleForm.name"
+                  maxlength="50"
+                  show-word-limit
                   placeholder="请输入角色名称"
                 ></el-input>
               </el-form-item>
@@ -135,7 +137,7 @@ defineExpose({ open })
                   show-word-limit
                   type="textarea"
                   :autosize="{ minRows: 2, maxRows: 2 }"
-                  maxlength="64"
+                  maxlength="100"
                 ></el-input>
               </el-form-item>
             </el-col>

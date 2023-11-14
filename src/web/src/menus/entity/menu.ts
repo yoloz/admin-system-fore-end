@@ -1,7 +1,6 @@
 import { Page } from '@/entity/page'
-import { IBaseEntity } from '@/entity/base'
 
-export interface IMenuForm extends IBaseEntity {
+export interface IMenuForm {
     id?: number
     name: string
     path: string

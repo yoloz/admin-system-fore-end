@@ -99,7 +99,6 @@ defineExpose({ open })
 </script>
 <template>
   <el-drawer
-    class="hrm-drawer"
     v-model="detailsModel"
     :show-close="false"
     size="600px"
