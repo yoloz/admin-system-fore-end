@@ -92,6 +92,17 @@ const onLoadApiData = (): void => {
 
 // const isScorll = ref<boolean>(false)
 
+// 新增之类功能刷新表格的时候totalRow大于等于0，后台不会再查询总数
+const onInitTableQueryTotal = (): void => {
+    tableConfig.loading = true
+    setTimeout(() => {
+        params.totalRow = -1
+        if (props.model === 'api') onLoadApiData()
+        if (props.model === 'demo') onLoadDemoData()
+        // footerFixed()
+    }, 500)
+}
+
 const onInitTable = (): void => {
     tableConfig.loading = true
     setTimeout(() => {
@@ -112,7 +123,7 @@ const onSizeChange = (): void => onInitTable()
 const onCurrentChange = (): void => onInitTable()
 
 onMounted(() => {
-    if (props.immediately) onInitTable()
+    if (props.immediately) onInitTableQueryTotal()
 })
 
 const tableRef = ref()
