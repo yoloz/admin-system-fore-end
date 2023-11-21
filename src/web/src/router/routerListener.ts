@@ -62,8 +62,8 @@ async function loadSystemRouter(getRouterMenu: Ref<any>) {
     if (userId === 0) {
         return new Error('load user fail...')
     }
-    // return await httpload(userId, getRouterMenu)
-    return await wsload(userId, getRouterMenu)
+    return await httpload(userId, getRouterMenu)
+    // return await wsload(userId, getRouterMenu)
 }
 
 function loadUserInfo() {

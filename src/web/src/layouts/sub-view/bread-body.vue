@@ -27,8 +27,8 @@ const toggleClick = () => {
   <div class="body-bread">
     <div class="hamburger" @click="toggleClick">
       <i
-        class="iconfont icon-is-active"
-        :class="{ 'icon-hamburger1': isActive }"
+        class="iconfont icon-hamburger-left"
+        :class="{ 'icon-hamburger-right': isActive }"
       ></i>
     </div>
     <BreadCrumb />

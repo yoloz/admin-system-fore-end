@@ -28,8 +28,8 @@ const toggleClick = () => {
     <el-col :span="1">
       <div class="hamburger" @click="toggleClick">
         <i
-          class="iconfont icon-is-active"
-          :class="{ 'icon-hamburger1': isActive }"
+          class="iconfont icon-hamburger-left"
+          :class="{ 'icon-icon-hamburger-right': isActive }"
         ></i>
       </div>
     </el-col>

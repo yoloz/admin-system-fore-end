@@ -1,8 +1,8 @@
 @font-face {
   font-family: "iconfont"; /* Project id 4151177 */
-  src: url('iconfont.woff2?t=1688697359095') format('woff2'),
-       url('iconfont.woff?t=1688697359095') format('woff'),
-       url('iconfont.ttf?t=1688697359095') format('truetype');
+  src: url('iconfont.woff2?t=1700547586200') format('woff2'),
+       url('iconfont.woff?t=1700547586200') format('woff'),
+       url('iconfont.ttf?t=1700547586200') format('truetype');
 }
 
 .iconfont {
@@ -13,119 +13,179 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-layout:before {
+  content: "\ecf5";
+}
+
+.icon-log:before {
+  content: "\ecf4";
+}
+
+.icon-data-encryption:before {
+  content: "\eccd";
+}
+
+.icon-data-add:before {
+  content: "\ecce";
+}
+
+.icon-databases:before {
+  content: "\eccf";
+}
+
+.icon-sqlserver:before {
+  content: "\ecd0";
+}
+
+.icon-data-security:before {
+  content: "\ecd1";
+}
+
+.icon-data-setting:before {
+  content: "\ecd2";
+}
+
+.icon-data-desensitization:before {
+  content: "\ecd3";
+}
+
+.icon-file-setting:before {
+  content: "\ecd4";
+}
+
+.icon-sql:before {
+  content: "\ecd5";
+}
+
+.icon-watermark:before {
+  content: "\ecd6";
+}
+
+.icon-data-conversion:before {
+  content: "\ecd7";
+}
+
+.icon-PostgreSQL:before {
+  content: "\e8b7";
+}
+
+.icon-Mysql:before {
+  content: "\e788";
+}
+
+.icon-database-server:before {
+  content: "\ecd8";
+}
+
+.icon-list:before {
+  content: "\ecd9";
+}
+
+.icon-dba:before {
+  content: "\ecda";
+}
+
+.icon-data-link:before {
+  content: "\ecdb";
+}
+
+.icon-data-user:before {
+  content: "\ecdc";
+}
+
 .icon-user:before {
-  content: "\e634";
+  content: "\ecdd";
 }
 
-.icon-Files:before {
-  content: "\e61a";
+.icon-files:before {
+  content: "\ecde";
 }
 
-.icon-is-active:before {
-  content: "\e601";
+.icon-hamburger-left:before {
+  content: "\ecdf";
 }
 
-.icon-hamburger1:before {
-  content: "\e608";
+.icon-hamburger-right:before {
+  content: "\ece0";
 }
 
-.icon-usernav:before {
-  content: "\e999";
-}
-
-.icon-yanzhengma:before {
+.icon-number-code:before {
   content: "\e65a";
 }
 
-.icon-password:before {
-  content: "\e663";
-}
-
-.icon-auth:before {
+.icon-security:before {
   content: "\e635";
 }
 
-.icon-guizeguanli:before {
-  content: "\e61c";
+.icon-usernav:before {
+  content: "\ece1";
 }
 
-.icon-moban:before {
-  content: "\e623";
+.icon-password:before {
+  content: "\ece2";
 }
 
-.icon-mobanguanli:before {
-  content: "\e636";
+.icon-rule-setting:before {
+  content: "\ece3";
+}
+
+.icon-template:before {
+  content: "\ece4";
 }
 
 .icon-monitor:before {
-  content: "\e71f";
+  content: "\ece5";
 }
 
-.icon-task:before {
-  content: "\e732";
-}
-
-.icon-banben:before {
-  content: "\e60a";
+.icon-tip-info:before {
+  content: "\ece7";
 }
 
 .icon-logs:before {
-  content: "\e60f";
+  content: "\ece8";
 }
 
 .icon-menu:before {
-  content: "\e677";
+  content: "\ece9";
+}
+
+.icon-user-filling-circle:before {
+  content: "\ecea";
+}
+
+.icon-signout:before {
+  content: "\eceb";
+}
+
+.icon-users:before {
+  content: "\ecec";
+}
+
+.icon-task:before {
+  content: "\eced";
 }
 
 .icon-user-filling:before {
-  content: "\e68b";
+  content: "\ecee";
 }
 
-.icon-icon_signout:before {
-  content: "\e632";
+.icon-function:before {
+  content: "\ecef";
 }
 
-.icon-type:before {
-  content: "\e6de";
+.icon-database:before {
+  content: "\ecf0";
 }
 
-.icon-roleSwitch:before {
-  content: "\e77b";
+.icon-access-list:before {
+  content: "\ecf1";
 }
 
-.icon-tasks:before {
-  content: "\e9c3";
+.icon-upgrade:before {
+  content: "\ecf2";
 }
 
-.icon-roles:before {
-  content: "\e606";
-}
-
-.icon-Algorithm:before {
-  content: "\e605";
-}
-
-.icon-icon-Databases:before {
-  content: "\e647";
-}
-
-.icon-approval:before {
-  content: "\e614";
-}
-
-.icon-a-icon_version1:before {
-  content: "\e604";
-}
-
-.icon-disposition:before {
-  content: "\e80a";
-}
-
-.icon-customer-center:before {
-  content: "\e827";
-}
-
-.icon-database-stroke:before {
-  content: "\e6f5";
+.icon-setting:before {
+  content: "\ecf3";
 }
 

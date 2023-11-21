@@ -86,7 +86,7 @@ onMounted(() => {
       >
         <el-icon>
           <i
-            class="iconfont icon-disposition"
+            class="iconfont icon-layout"
             @click="layoutDrawerRef.open()"
           ></i>
         </el-icon>
@@ -100,7 +100,7 @@ onMounted(() => {
         placement="bottom"
       >
         <el-icon>
-          <i class="iconfont icon-banben" @click="drawerRef.open()"></i>
+          <i class="iconfont icon-tip-info" @click="drawerRef.open()"></i>
         </el-icon>
       </el-tooltip>
     </div>
@@ -124,7 +124,7 @@ onMounted(() => {
           <template #dropdown>
             <el-dropdown-menu>
               <el-dropdown-item command="a">
-                <el-icon> <i class="iconfont icon-user"></i> </el-icon
+                <el-icon> <i class="iconfont icon-user-filling"></i> </el-icon
                 >{{ getLoginUser.nickname }}
               </el-dropdown-item>
               <el-dropdown-item command="b">

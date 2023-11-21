@@ -106,7 +106,7 @@ defineExpose({ open })
     <template #header="{ close, titleId, titleClass }">
       <div class="drawer-header" :class="titleClass">
         <div class="left">
-          <i class="iconfont icon-customer-center"></i>
+          <i class="iconfont icon-usernav"></i>
         </div>
         <div class="right">
           <h4>{{ userDetail?.nickname }}</h4>

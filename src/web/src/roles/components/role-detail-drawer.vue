@@ -111,7 +111,7 @@ defineExpose({ open })
         <template #header="{ close, titleClass }">
             <div class="drawer-header" :class="titleClass">
                 <div class="left">
-                    <i class="iconfont icon-usernav"></i>
+                    <i class="iconfont icon-users"></i>
                 </div>
                 <div class="right">
                     <h4>{{ rawRow?.name }}</h4>
