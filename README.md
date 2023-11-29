@@ -95,3 +95,13 @@ Header 部分只有一行，包括三个字段：type（必需）、scope（可�
 - refactor：重构（即不是新增功能，也不是修改 bug 的代码变动）
 - test：增加测试
 - chore：构建过程或辅助工具的变动
+
+## 多级路由
+
+中间目录下创建`index.vue`:
+
+```js
+<template>
+  <router-view />
+</template>
+```
