@@ -85,6 +85,8 @@ const onLoadApiData = (): void => {
         })
         .catch((e: any) => {
             tableConfig.loading = false
+            tableData.records = []
+            tableData.totalRow = 0
             // footerFixed()
         })
 }
@@ -140,26 +142,11 @@ const conf = ref({
 })
 </script>
 <template>
-  <el-table
-    ref="tableRef"
-    v-loading="tableConfig.loading"
-    :element-loading-svg="tableConfig.loadingSvg"
-    :element-loading-svg-view-box="tableConfig.loadingSvgViewBox"
-    :element-loading-text="tableConfig.loadingText"
-    :border="conf.border"
-    :stripe="conf.stripe"
-    :data="tableData.records"
-    :scrollbar-always-on="conf.scrollbarAlwaysOn"
-    :show-header="conf.showHeader"
-    v-bind="$attrs"
-  >
-    <el-table-column
-      v-if="selection && footer"
-      type="selection"
-      fixed="left"
-      width="50"
-      align="center"
-    />
+  <el-table ref="tableRef" v-loading="tableConfig.loading" :element-loading-svg="tableConfig.loadingSvg"
+    :element-loading-svg-view-box="tableConfig.loadingSvgViewBox" :element-loading-text="tableConfig.loadingText"
+    :border="conf.border" :stripe="conf.stripe" :data="tableData.records" :scrollbar-always-on="conf.scrollbarAlwaysOn"
+    :show-header="conf.showHeader" v-bind="$attrs">
+    <el-table-column v-if="selection && footer" type="selection" fixed="left" width="50" align="center" />
     <slot />
   </el-table>
   <!-- <div class="footer" :class="isScorll ? 'footer-fixed' : ''" v-if="footer"> -->
@@ -167,76 +154,41 @@ const conf = ref({
     <div class="right">
       <el-dropdown trigger="click" placement="top">
         <el-button text bg style="padding: 9px">
-          <svg
-            t="1676277937013"
-            viewBox="0 0 1024 1024"
-            version="1.1"
-            p-id="3594"
-            width="20"
-            height="20"
-          >
+          <svg t="1676277937013" viewBox="0 0 1024 1024" version="1.1" p-id="3594" width="20" height="20">
             <path
               d="M184.2 203.3c-47.6 0-86.2 38.6-86.2 86.2s38.6 86.2 86.2 86.2 86.2-38.6 86.2-86.2-38.6-86.2-86.2-86.2z m0 229.8c-47.6 0-86.2 38.6-86.2 86.2s38.6 86.2 86.2 86.2 86.2-38.6 86.2-86.2-38.6-86.2-86.2-86.2z m0 229.9c-47.6 0-86.2 38.6-86.2 86.2s38.6 86.2 86.2 86.2 86.2-38.6 86.2-86.2-38.6-86.2-86.2-86.2z m229.9-316.1h459.7c31.7 0 57.5-25.7 57.5-57.5 0-31.7-25.7-57.5-57.5-57.5H414.1c-31.7 0-57.5 25.7-57.5 57.5s25.7 57.5 57.5 57.5z m459.7 115H414.1c-31.7 0-57.5 25.7-57.5 57.5 0 31.7 25.7 57.5 57.5 57.5h459.7c31.7 0 57.5-25.7 57.5-57.5-0.1-31.8-25.8-57.5-57.5-57.5z m0 229.8H414.1c-31.7 0-57.5 25.7-57.5 57.5 0 31.7 25.7 57.5 57.5 57.5h459.7c31.7 0 57.5-25.7 57.5-57.5-0.1-31.7-25.8-57.5-57.5-57.5z"
-              p-id="3595"
-            ></path>
+              p-id="3595"></path>
           </svg>
         </el-button>
         <template #dropdown>
-          <el-dropdown-menu>
+          <el-dropdown-menu >
             <el-dropdown-item>
-              <el-switch
-                v-model="conf.showHeader"
-                style="margin-right: 8px"
-                inline-prompt
-                :active-icon="Check"
-                :inactive-icon="Close"
-              />
+              <el-switch v-model="conf.showHeader" style="margin-right: 8px" inline-prompt :active-icon="Check"
+                :inactive-icon="Close" />
               <span>显示表头</span>
             </el-dropdown-item>
             <el-dropdown-item>
-              <el-switch
-                v-model="conf.stripe"
-                style="margin-right: 8px"
-                inline-prompt
-                :active-icon="Check"
-                :inactive-icon="Close"
-              />
+              <el-switch v-model="conf.stripe" style="margin-right: 8px" inline-prompt :active-icon="Check"
+                :inactive-icon="Close" />
               <span>显示斑马纹</span>
             </el-dropdown-item>
             <el-dropdown-item>
-              <el-switch
-                v-model="conf.border"
-                style="margin-right: 8px"
-                inline-prompt
-                :active-icon="Check"
-                :inactive-icon="Close"
-              />
+              <el-switch v-model="conf.border" style="margin-right: 8px" inline-prompt :active-icon="Check"
+                :inactive-icon="Close" />
               <span>显示横向分割线</span>
             </el-dropdown-item>
             <el-dropdown-item>
-              <el-switch
-                v-model="conf.scrollbarAlwaysOn"
-                style="margin-right: 8px"
-                inline-prompt
-                :active-icon="Check"
-                :inactive-icon="Close"
-              />
+              <el-switch v-model="conf.scrollbarAlwaysOn" style="margin-right: 8px" inline-prompt :active-icon="Check"
+                :inactive-icon="Close" />
               <span>总是显示滚动条</span>
             </el-dropdown-item>
           </el-dropdown-menu>
         </template>
       </el-dropdown>
-      <el-pagination
-        class="footer-page"
-        v-model:currentPage="params.pageNumber"
-        v-model:page-size="params.pageSize"
-        @size-change="onSizeChange"
-        @current-change="onCurrentChange"
-        background
-        layout="prev, pager, next, sizes,  total, jumper"
-        :page-sizes="[10, 15, 20, 30, 50]"
-        :total="tableData.totalRow"
-      />
+      <el-pagination class="footer-page" v-model:currentPage="params.pageNumber" v-model:page-size="params.pageSize"
+        @size-change="onSizeChange" @current-change="onCurrentChange" background
+        layout="prev, pager, next, sizes,  total, jumper" :page-sizes="[10, 15, 20, 30, 50]"
+        :total="tableData.totalRow" />
     </div>
     <div class="footer-tools">
       <slot name="tools"></slot>

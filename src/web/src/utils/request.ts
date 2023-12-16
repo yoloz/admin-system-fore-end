@@ -61,20 +61,20 @@ httpRequest.instance.interceptors.response.use(
     (error: any) => {
         // eslint-disable-next-line no-console
         // console.warn('error', error)
-        const msg = error.response.data
+        // const msg = error.response.data
         switch (error.code) {
             case 'ECONNABORTED':
-                ElMessage({ type: 'error', message: msg || '系统连接超时,请稍后重试' })
-                return Promise.reject(new Error(msg || '系统连接超时,请稍后重试'))
+                ElMessage({ type: 'error', message: '系统连接超时,请稍后重试' })
+                return Promise.reject(new Error('系统连接超时,请稍后重试'))
             case 'ERR_BAD_RESPONSE':
-                ElMessage({ type: 'error', message: msg || '系统响应错误,请确认请求是否准确' })
-                return Promise.reject(new Error(msg || '系统响应错误,请确认请求是否准确'))
+                ElMessage({ type: 'error', message: '系统响应错误,请确认请求是否准确' })
+                return Promise.reject(new Error('系统响应错误,请确认请求是否准确'))
             case 'ERR_BAD_REQUEST':
-                ElMessage({ type: 'error', message: msg || '系统拒绝请求,请确认是否有操作权限' })
-                return Promise.reject(new Error(msg || '系统拒绝请求,请确认是否有操作权限'))
+                ElMessage({ type: 'error', message: '系统拒绝请求,请确认是否有操作权限' })
+                return Promise.reject(new Error('系统拒绝请求,请确认是否有操作权限'))
             default:
-                ElMessage({ type: 'error', message: msg || '系统异常' })
-                return Promise.reject(new Error(msg || '系统异常'))
+                ElMessage({ type: 'error', message: '系统异常' })
+                return Promise.reject(new Error('系统异常'))
         }
     }
 )
