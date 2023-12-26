@@ -103,7 +103,7 @@ defineExpose({ open })
     :show-close="false"
     size="600px"
   >
-    <template #header="{ close, titleId, titleClass }">
+    <template #header="{ titleClass }">
       <div class="drawer-header" :class="titleClass">
         <div class="left">
           <i class="iconfont icon-usernav"></i>
@@ -120,8 +120,7 @@ defineExpose({ open })
         :disabled="isDisabled"
         >编辑</el-button
       >
-      <!-- <el-dropdown @command="handleCommand" v-if="!userDetail?.builtin"> -->
-      <el-dropdown @command="handleCommand">
+      <el-dropdown @command="handleCommand" v-if="!userDetail?.builtin">
         <el-button text bg
           ><el-icon> <MoreFilled /> </el-icon
         ></el-button>
@@ -338,7 +337,7 @@ defineExpose({ open })
     }
 
     .label {
-      width: 80px;
+      width: 100px;
     }
 
     .value {

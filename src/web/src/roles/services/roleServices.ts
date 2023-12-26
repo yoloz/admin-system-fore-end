@@ -15,7 +15,7 @@ export const updateRole = (form: IRoleForm) => {
 }
 // 删除角色
 export const removeRole = (roleIds: number[]) => {
-    return httpRequest.post('/role/delete', { roleIds })
+    return httpRequest.post('/role/delete', roleIds)
 }
 // 获取角色下拉菜单,仅拉取此用户可配置的角色[{id:"",name:""}...]
 export const getRoleOptionByUser = (userId: number) => {
