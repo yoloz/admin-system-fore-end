@@ -1,8 +1,8 @@
 @font-face {
   font-family: "iconfont"; /* Project id 4151177 */
-  src: url('iconfont.woff2?t=1702870672378') format('woff2'),
-       url('iconfont.woff?t=1702870672378') format('woff'),
-       url('iconfont.ttf?t=1702870672378') format('truetype');
+  src: url('iconfont.woff2?t=1704077064428') format('woff2'),
+       url('iconfont.woff?t=1704077064428') format('woff'),
+       url('iconfont.ttf?t=1704077064428') format('truetype');
 }
 
 .iconfont {
@@ -11,6 +11,30 @@
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-chart-area:before {
+  content: "\ecf8";
+}
+
+.icon-chart-bar:before {
+  content: "\ecf9";
+}
+
+.icon-chart-line:before {
+  content: "\ecfa";
+}
+
+.icon-chart-pie:before {
+  content: "\ecfc";
+}
+
+.icon-summary:before {
+  content: "\ecfd";
+}
+
+.icon-monitor:before {
+  content: "\ecfe";
 }
 
 .icon-access-control:before {
@@ -139,10 +163,6 @@
 
 .icon-template:before {
   content: "\ece4";
-}
-
-.icon-monitor:before {
-  content: "\ece5";
 }
 
 .icon-tip-info:before {
