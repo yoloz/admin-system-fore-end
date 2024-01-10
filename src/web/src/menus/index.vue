@@ -37,7 +37,7 @@ const onBatchDeletion = () => {
         removeMenu(ids).then((res) => {
             ElMessage({ type: 'success', message: '删除成功' })
             refreshTable()
-        })
+        }).catch(() => {})
     })
 }
 const setSelectionChange = (selection: IMenuForm[]) => {

@@ -21,7 +21,7 @@ const initRoleMenu = (roleId: number) => {
     getMenuByRole({ id: roleId }).then(res => {
         defaultTreeNode.value = res.data.keys
         treeData.value = res.data.menus
-    })
+    }).catch(() => {})
 }
 type Emit = { (e: 'update-table'): void }
 const emit = defineEmits<Emit>()
@@ -34,7 +34,6 @@ const submit = () => {
         ElMessage.success('保存成功')
         drawer.value = false
         emit('update-table')
-
         loading.value = false
     }).catch(() => {
         loading.value = false

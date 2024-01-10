@@ -32,7 +32,7 @@ const onloadCaptchaImage = (): void => {
     getCaptchaImage().then((res: any) => {
         loginForm.uuid = res.data.uuid
         captchaImage.value = res.data.image
-    })
+    }).catch(() => {})
 }
 const loading = ref<boolean>(false)
 const loginSubmit = (formEl: FormInstance | undefined) => {
@@ -162,7 +162,7 @@ onMounted(() => {
       justify-content: center;
 
       .form {
-        width: 380px;
+        width: 400px;
 
         h1 {
           color: #30384f;

@@ -21,14 +21,8 @@ const infoRules = reactive<FormRules>({
 
 const initRoleList = (userId: number) => {
     getRoleOptionByUser(userId).then((res: any) => {
-        roleList.value = []
-        res.data.forEach((item: any) => {
-            roleList.value.push({
-                label: item.name,
-                id: item.id
-            })
-        })
-    })
+        roleList.value = res.data
+    }).catch(() => {})
 }
 
 const submit = (formEl: FormInstance) => {
@@ -39,10 +33,9 @@ const submit = (formEl: FormInstance) => {
             authRole(userForm).then(res => {
                 ElMessage.success('修改成功')
                 dialog.value = false
-                loading.value = false
                 emit('refresh-table')
                 loading.value = false
-            })
+            }).catch(() => {})
         }
     })
 }
@@ -78,8 +71,8 @@ defineExpose({ open })
                             <el-form-item label="用户角色" prop="roleIds">
                                 <el-select v-model="userForm.roleIds" multiple placeholder="请选择" collapse-tags
                                     multiple-limit="4" collapse-tags-tooltip>
-                                    <el-option v-for="item in roleList" :label="item.label" :value="item.id"
-                                        :key="item.id"></el-option>
+                                    <el-option v-for="(item, i) in roleList" :label="item.name" :value="item.id"
+                                        :key="i"></el-option>
                                 </el-select>
                             </el-form-item>
                         </el-col>

@@ -2,11 +2,10 @@
 import { ref, reactive } from 'vue'
 import { ElMessage, FormInstance, FormRules } from 'element-plus'
 import { Md5 } from 'ts-md5'
-import { validateMobile, validateEmail, validatePassword } from '@ued/utils/src/validate'
 import { storeToRefs } from 'pinia'
 
+import { validateMobile, validateEmail, validatePassword } from '@/utils/validate'
 import { useUserStore } from '@/stores/userStore'
-import { IRoleForm } from '@/roles/entity/role'
 import { getRoleOptionByUser } from '@/roles/services/roleServices'
 
 import { IUserForm } from '../entity/user'
@@ -48,17 +47,13 @@ const submit = (formEl: FormInstance) => {
                 const pwd = md5.appendStr(userForm.password).end()
                 createUser({ ...userForm, password: pwd }).then(res => {
                     ElMessage.success('添加成功')
-                    loading.value = false
                     emit('refresh-table')
-                    loading.value = false
-                })
+                }).catch(() => {})
             } else {
                 updateUser({ ...userForm }).then(res => {
                     ElMessage.success('修改成功')
-                    loading.value = false
                     emit('refresh-table')
-                    loading.value = false
-                })
+                }).catch(() => {})
             }
             loading.value = false
             dialog.value = false
@@ -70,14 +65,8 @@ const roleOptions = ref<Array<any>>([])
 const initRoleOption = (id: any, roles: any) => {
     if (mode.value === 'add') {
         getRoleOptionByUser(id || getLoginUser.value.id).then((res: any) => {
-            roleOptions.value = []
-            res.data.forEach((item: IRoleForm) => {
-                roleOptions.value.push({
-                    label: item.name,
-                    id: item.id
-                })
-            })
-        })
+            roleOptions.value = res.data
+        }).catch(() => {})
     } else {
         roleOptions.value = []
         roles.forEach((item: any) => {
@@ -117,7 +106,7 @@ defineExpose({ open })
 
 </script>
 <template>
-    <el-dialog v-model="dialog" :title="`${mode === 'add' ? '新增' : '编辑'}用户`" top="10vh" width="750px"
+    <el-dialog v-model="dialog" :title="`${mode === 'add' ? '添加' : '编辑'}用户`" top="10vh" width="750px"
         :close-on-click-modal="false" @close="resetForm(userFormRef)">
         <custom-form-layout>
             <template #title>基本信息</template>
@@ -146,8 +135,8 @@ defineExpose({ open })
                             <el-form-item label="用户角色" prop="roleIds">
                                 <el-select v-model="userForm.roleIds" multiple placeholder="请选择" collapse-tags
                                     :disabled="disabled" multiple-limit="4" collapse-tags-tooltip>
-                                    <el-option v-for="item in roleOptions" :label="item.label" :value="item.id"
-                                        :key="item.id"></el-option>
+                                    <el-option v-for="(item, i) in roleOptions" :label="item.name" :value="item.id"
+                                        :key="i"></el-option>
                                 </el-select>
                             </el-form-item>
                         </el-col>

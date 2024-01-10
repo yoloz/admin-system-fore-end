@@ -7,7 +7,7 @@ const httpRequest = new HttpRequest()
 
 // axios基准路径,mock直接当前路径，即VITE_BASE_URL===''，在配置文件.env.development中配置
 httpRequest.instance.defaults.baseURL = import.meta.env.VITE_BASE_URL
-httpRequest.instance.defaults.timeout = 10000
+httpRequest.instance.defaults.timeout = 30000
 
 httpRequest.instance.interceptors.request.use(
     (config: any) => {

@@ -46,7 +46,7 @@ const onBatchDeletion = () => {
         removeUser(ids).then((res) => {
             ElMessage({ type: 'success', message: '删除成功' })
             refreshTable()
-        })
+        }).catch(() => {})
     })
 }
 const setSelectionChange = (selection: IUserForm[]) => {
@@ -72,7 +72,7 @@ const exportTable = () => {
         const wb = utils.book_new()
         utils.book_append_sheet(wb, ws, 'Sheet1')
         writeFileXLSX(wb, Date.now() + '.xlsx')
-    })
+    }).catch(() => {})
 }
 
 const checkbox = (row: any) => {

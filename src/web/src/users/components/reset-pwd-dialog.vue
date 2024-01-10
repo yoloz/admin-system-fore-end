@@ -2,7 +2,8 @@
 import { ref, reactive } from 'vue'
 import { ElMessage, FormRules, FormInstance } from 'element-plus'
 import { Md5 } from 'ts-md5'
-import { validatePassword } from '@ued/utils/src/validate'
+
+import { validatePassword } from '@/utils/validate'
 
 import { IUserForm } from '../entity/user'
 import { resetPwd } from '../services/userServices'
@@ -34,11 +35,10 @@ const submit = (formEl: FormInstance) => {
             const pwd = md5.appendAsciiStr(passwordForm.password).end()
             resetPwd({ ...passwordForm, password: pwd }).then(res => {
                 ElMessage.success('修改成功')
-                loading.value = false
                 dialog.value = false
                 emit('refresh-table')
                 loading.value = false
-            })
+            }).catch(() => {})
         }
     })
 }

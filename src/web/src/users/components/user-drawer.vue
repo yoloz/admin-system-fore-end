@@ -62,7 +62,7 @@ const deleteUser = (id: number) => {
             removeUser([id]).then((res) => {
                 ElMessage({ type: 'success', message: '删除成功' })
                 updateTable()
-            })
+            }).catch(() => {})
         })
     }
 }
@@ -74,11 +74,9 @@ const onBatchAbled = () => {
     }
     changeEnable(param).then((res) => {
         emit('update-table')
-        ElMessage.success('操作成功')
-        setTimeout(() => {
-            detailsModel.value = false
-        }, 100)
-    })
+        ElMessage.success('删除成功')
+        detailsModel.value = false
+    }).catch(() => {})
 }
 const isDisabled = ref<boolean>(false)
 

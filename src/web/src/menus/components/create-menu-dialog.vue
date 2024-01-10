@@ -106,9 +106,10 @@ const selectOptions = ref<any>()
 const title = ref<string>('新建')
 const open = (type: string, row: any) => {
     dialog.value = true
+    menuFormRef.value?.resetFields()
     getSelectOptions().then((res: any) => {
         selectOptions.value = res.data
-    })
+    }).catch(() => {})
     nextTick(() => {
         dialogType.value = type
         if (type === 'add') {
@@ -153,7 +154,7 @@ defineExpose({ open })
                 </el-radio-group>
             </el-form-item>
             <el-form-item label="名称" prop="name">
-                <el-input v-model="menuForm.name" style="width: 300px" placeholder="请输入名称" />
+                <el-input v-model="menuForm.name" style="width: 300px" maxlength="100" show-word-limit placeholder="请输入名称" />
             </el-form-item>
             <el-form-item v-show="menuForm.type !== 2" label="是否隐藏" prop="hidden">
                 <el-radio-group v-model="menuForm.hidden">
@@ -190,7 +191,7 @@ defineExpose({ open })
                 <el-input v-model="menuForm.component" style="width: 300px;" placeholder="请输入展示文件路径" />
             </el-form-item>
             <el-form-item label="上级目录" prop="pid">
-                <el-tree-select :props="treeProps" v-model="menuForm.pid" :data="selectOptions" check-strictly
+                <el-tree-select :props="treeProps" v-model="menuForm.pid" placement="top-start" :data="selectOptions" check-strictly
                     :render-after-expand="false" style="width: 300px;" placeholder="选择上级目录" />
             </el-form-item>
         </el-form>

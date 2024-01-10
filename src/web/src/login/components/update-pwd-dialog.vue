@@ -3,8 +3,8 @@ import { ref, reactive } from 'vue'
 import { ElMessage, FormInstance, FormRules } from 'element-plus'
 import { Md5 } from 'ts-md5'
 import { useRouter } from 'vue-router'
-import { validatePassword } from '@ued/utils/src/validate'
 
+import { validatePassword } from '@/utils/validate'
 import { updatePwd } from '@/users/services/userServices'
 import { IPwd, IUserForm } from '@/users/entity/user'
 const dialog = ref(false)
@@ -65,7 +65,7 @@ const submit = (formEl: FormInstance) => {
                 dialog.value = false
                 ElMessage.success('修改成功')
                 router.replace('/login')
-            })
+            }).catch(() => {})
         }
     })
 }

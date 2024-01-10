@@ -44,10 +44,9 @@ const submit = (formEl: FormInstance) => {
                     level: getLoginUser.value.level
                 })
                 ElMessage.success('更新成功')
-                loading.value = false
                 dialog.value = false
                 loading.value = false
-            })
+            }).catch(() => {})
         }
     })
 }
